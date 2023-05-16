@@ -66,11 +66,12 @@ export function useBackendMutation(objectToAxiosParams, useMutationParams, query
 
     return useMutation((object) => wrappedParams(objectToAxiosParams(object)), {
         onError: (data) => {
-            toast(`${data}`)
+            toast.error(`${data}`, {position: toast.POSITION.TOP_RIGHT});
         },
         // Stryker disable all: Not sure how to set up the complex behavior needed to test this
         onSettled: () => {
             if (queryKey!==null)
+            console.log("invalidate this key: ", queryKey);
              queryClient.invalidateQueries(queryKey);
         },
         // Stryker enable all
