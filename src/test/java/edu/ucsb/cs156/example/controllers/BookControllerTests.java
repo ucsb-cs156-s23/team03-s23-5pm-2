@@ -21,8 +21,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 
-import java.time.LocalDateTime;
-
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -249,7 +247,7 @@ public class BookControllerTests extends ControllerTestCase {
                 Book bookEdited = Book.builder()
                                 .title("firstDayOfFestivus")
                                 .author("20232")
-                                .date("2023")
+                                .date("2024")
                                 .build();
 
                 String requestBody = mapper.writeValueAsString(bookEdited);
