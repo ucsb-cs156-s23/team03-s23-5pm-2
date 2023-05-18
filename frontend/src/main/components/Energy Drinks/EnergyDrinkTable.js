@@ -2,6 +2,10 @@ import React from "react";
 import OurTable, { ButtonColumn } from "main/components/OurTable";
 import { useNavigate } from "react-router-dom";
 import { energydrinkUtils } from "main/utils/energydrinkUtils";
+import { apiCurrentUserFixtures }  from "fixtures/currentUserFixtures";
+import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
+import axios from "axios";
+import AxiosMockAdapter from "axios-mock-adapter";
 
 const showCell = (cell) => JSON.stringify(cell.row.values);
 
