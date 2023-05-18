@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for utils/energydrinkUtils.js</title>
+    <title>Code coverage report for utils/restaurantUtils.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../index.html">All files</a> / <a href="index.html">utils</a> energydrinkUtils.js</h1>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">utils</a> restaurantUtils.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -152,7 +152,10 @@
 <a name='L87'></a><a href='#L87'>87</a>
 <a name='L88'></a><a href='#L88'>88</a>
 <a name='L89'></a><a href='#L89'>89</a>
-<a name='L90'></a><a href='#L90'>90</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-yes">12x</span>
@@ -241,87 +244,90 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// get energy drinks from local storage
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// get restaurants from local storage
 const get = () =&gt; {
-    const energydrinkValue = localStorage.getItem("energydrinks");//Gets the text of the value associated with the key "energydrinks" from browser local storage
-    if (energydrinkValue === undefined) {
-        const energydrinkCollection = { nextId: 1, energydrinks: [] }
-        return set(energydrinkCollection);
+    const restaurantValue = localStorage.getItem("restaurants");
+    if (restaurantValue === undefined) {
+        const restaurantCollection = { nextId: 1, restaurants: [] }
+        return set(restaurantCollection);
     }
-    const energydrinkCollection = JSON.parse(energydrinkValue);
-    if (energydrinkCollection === null) {
-        const energydrinkCollection = { nextId: 1, energydrinks: [] }
-        return set(energydrinkCollection);
+    const restaurantCollection = JSON.parse(restaurantValue);
+    if (restaurantCollection === null) {
+        const restaurantCollection = { nextId: 1, restaurants: [] }
+        return set(restaurantCollection);
     }
-    return energydrinkCollection;
+    return restaurantCollection;
 };
 &nbsp;
 const getById = (id) =&gt; {
     if (id === undefined) {
         return { "error": "id is a required parameter" };
     }
-    const energydrinkCollection = get();
-    const energydrinks = energydrinkCollection.energydrinks;
+    const restaurantCollection = get();
+    const restaurants = restaurantCollection.restaurants;
 &nbsp;
     /* eslint-disable-next-line eqeqeq */ // we really do want == here, not ===
-    const index = energydrinks.findIndex((e) =&gt; e.id == id);
+    const index = restaurants.findIndex((r) =&gt; r.id == id);
     if (index === -1) {
-        return { "error": `energy drink with id ${id} not found` };
+        return { "error": `restaurant with id ${id} not found` };
     }
-    return { energydrink: energydrinks[index] };
+    return { restaurant: restaurants[index] };
 }
 &nbsp;
-// set energy drinks in local storage
-const set = (energydrinkCollection) =&gt; {
-    localStorage.setItem("energydrinks", JSON.stringify(energydrinkCollection));
-    return energydrinkCollection;
+// set restaurants in local storage
+const set = (restaurantCollection) =&gt; {
+    localStorage.setItem("restaurants", JSON.stringify(restaurantCollection));
+    return restaurantCollection;
 };
 &nbsp;
-// add a energy drink to local storage
-const add = (energydrink) =&gt; {
-    const energydrinkCollection = get();
-    energydrink = { ...energydrink, id: energydrinkCollection.nextId };
-    energydrinkCollection.nextId++;
-    energydrinkCollection.energydrinks.push(energydrink);
-    set(energydrinkCollection);
-    return energydrink;
+// add a restaurant to local storage
+const add = (restaurant) =&gt; {
+    const restaurantCollection = get();
+    restaurant = { ...restaurant, id: restaurantCollection.nextId };
+    restaurantCollection.nextId++;
+    restaurantCollection.restaurants.push(restaurant);
+    set(restaurantCollection);
+    return restaurant;
 };
 &nbsp;
-// update a energydrink in local storage
-const update = (energydrink) =&gt; {
-    const energydrinkCollection = get();
+// update a restaurant in local storage
+const update = (restaurant) =&gt; {
+    const restaurantCollection = get();
 &nbsp;
-    const energydrinks = energydrinkCollection.energydrinks;
+    const restaurants = restaurantCollection.restaurants;
 &nbsp;
     /* eslint-disable-next-line eqeqeq */ // we really do want == here, not ===
-    const index = energydrinks.findIndex((e) =&gt; e.id == energydrink.id);
+    const index = restaurants.findIndex((r) =&gt; r.id == restaurant.id);
     if (index === -1) {
-        return { "error": `energy drink with id ${energydrink.id} not found` };
+        return { "error": `restaurant with id ${restaurant.id} not found` };
     }
-    energydrinks[index] = energydrink;
-    set(energydrinkCollection);
-    return { energydrinkCollection: energydrinkCollection };
+    restaurants[index] = restaurant;
+    set(restaurantCollection);
+    return { restaurantCollection: restaurantCollection };
 };
 &nbsp;
-// delete a energy drink from local storage
+// delete a restaurant from local storage
 const del = (id) =&gt; {
     if (id === undefined) {
         return { "error": "id is a required parameter" };
     }
-    const energydrinkCollection = get();
-    const energydrinks = energydrinkCollection.energydrinks;
+    const restaurantCollection = get();
+    const restaurants = restaurantCollection.restaurants;
 &nbsp;
     /* eslint-disable-next-line eqeqeq */ // we really do want == here, not ===
-    const index = energydrinks.findIndex((e) =&gt; e.id == id);
+    const index = restaurants.findIndex((r) =&gt; r.id == id);
     if (index === -1) {
-        return { "error": `energy drink with id ${id} not found` };
+        return { "error": `restaurant with id ${id} not found` };
     }
-    energydrinks.splice(index, 1);
-    set(energydrinkCollection);
-    return { energydrinkCollection: energydrinkCollection };
+    restaurants.splice(index, 1);
+    set(restaurantCollection);
+    return { restaurantCollection: restaurantCollection };
 };
 &nbsp;
-const energydrinkUtils = {
+const restaurantUtils = {
     get,
     getById,
     add,
@@ -329,7 +335,10 @@ const energydrinkUtils = {
     del
 };
 &nbsp;
-export { energydrinkUtils };
+export { restaurantUtils };
+&nbsp;
+&nbsp;
+&nbsp;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -337,7 +346,7 @@ export { energydrinkUtils };
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Thu May 18 2023 15:20:31 GMT-0700 (Pacific Daylight Time)
+                at Thu May 18 2023 15:21:47 GMT-0700 (Pacific Daylight Time)
             </div>
         <script src="../prettify.js"></script>
         <script>

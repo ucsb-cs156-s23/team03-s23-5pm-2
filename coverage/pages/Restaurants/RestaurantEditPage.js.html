@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for pages/Energy Drinks/EnergyDrinkEditPage.js</title>
+    <title>Code coverage report for pages/Restaurants/RestaurantEditPage.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">pages/Energy Drinks</a> EnergyDrinkEditPage.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">pages/Restaurants</a> RestaurantEditPage.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/8</span>
+                <span class='fraction'>8/8</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/8</span>
+                <span class='fraction'>8/8</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -91,7 +91,8 @@
 <a name='L26'></a><a href='#L26'>26</a>
 <a name='L27'></a><a href='#L27'>27</a>
 <a name='L28'></a><a href='#L28'>28</a>
-<a name='L29'></a><a href='#L29'>29</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -99,51 +100,53 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&nbsp;
+import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import { useParams } from "react-router-dom";
-import { energydrinkUtils } from 'main/utils/energydrinkUtils';
-import EnergyDrinkForm from 'main/components/Energy Drinks/EnergyDrinkForm';
+import { restaurantUtils }  from 'main/utils/restaurantUtils';
+import RestaurantForm from 'main/components/Restaurants/RestaurantForm';
 import { useNavigate } from 'react-router-dom';
 &nbsp;
 &nbsp;
-export default function <span class="fstat-no" title="function not covered" >EnergyDrinkEditPage(</span>) {
-    let { id } = <span class="cstat-no" title="statement not covered" >useParams();</span>
+export default function RestaurantEditPage() {
+    let { id } = useParams();
 &nbsp;
-    let navigate = <span class="cstat-no" title="statement not covered" >useNavigate();</span>
+    let navigate = useNavigate(); 
 &nbsp;
-    const response = <span class="cstat-no" title="statement not covered" >energydrinkUtils.getById(id);</span>
+    const response = restaurantUtils.getById(id);
 &nbsp;
-    const onSubmit = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >as</span>ync (energydrink) =&gt; {</span>
-        const updatedEnergyDrink = <span class="cstat-no" title="statement not covered" >energydrinkUtils.update(energydrink);</span>
-<span class="cstat-no" title="statement not covered" >        console.log("updatedEnergyDrink: " + JSON.stringify(updatedEnergyDrink));</span>
-<span class="cstat-no" title="statement not covered" >        navigate("/energydrinks");</span>
-    }
+    const onSubmit = async (restaurant) =&gt; {
+        const updatedRestaurant = restaurantUtils.update(restaurant);
+        console.log("updatedRestaurant: " + JSON.stringify(updatedRestaurant));
+        navigate("/restaurants");
+    }  
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return (</span>
+    return (
         &lt;BasicLayout&gt;
             &lt;div className="pt-2"&gt;
-                &lt;h1&gt;Edit EnergyDrink&lt;/h1&gt;
-                &lt;EnergyDrinkForm submitAction={onSubmit} buttonLabel={"Update"} initialContents={response.energydrink} /&gt;
+                &lt;h1&gt;Edit Restaurant&lt;/h1&gt;
+                &lt;RestaurantForm submitAction={onSubmit} buttonLabel={"Update"} initialContents={response.restaurant}/&gt;
             &lt;/div&gt;
         &lt;/BasicLayout&gt;
     )
@@ -154,7 +157,7 @@ export default function <span class="fstat-no" title="function not covered" >Ene
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Thu May 18 2023 15:20:31 GMT-0700 (Pacific Daylight Time)
+                at Thu May 18 2023 15:21:47 GMT-0700 (Pacific Daylight Time)
             </div>
         <script src="../../prettify.js"></script>
         <script>
