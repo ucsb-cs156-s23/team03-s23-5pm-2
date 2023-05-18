@@ -12,6 +12,11 @@ import UCSBDatesCreatePage from "main/pages/UCSBDates/UCSBDatesCreatePage";
 import UCSBDatesEditPage from "main/pages/UCSBDates/UCSBDatesEditPage";
 
 
+import EnergyDrinkIndexPage from "main/pages/Energy Drinks/EnergyDrinkIndexPage";
+import EnergyDrinkCreatePage from "main/pages/Energy Drinks/EnergyDrinkCreatePage";
+import EnergyDrinkEditPage from "main/pages/Energy Drinks/EnergyDrinkEditPage";
+import EnergyDrinkDetailsPage from "main/pages/Energy Drinks/EnergyDrinkDetailsPage";
+
 import { hasRole, useCurrentUser } from "main/utils/currentUser";
 
 import "bootstrap/dist/css/bootstrap.css";
@@ -54,6 +59,22 @@ function App() {
             </>
           )
         }
+         {
+          hasRole(currentUser, "ROLE_USER") && (
+            <>
+              <Route exact path="/energydrinks/list" element={<EnergyDrinksIndexPage />} />
+            </>
+          )
+        }
+         {
+          hasRole(currentUser, "ROLE_ADMIN") && (
+            <>
+              <Route exact path="/energydrinks/edit/:id" element={<EnergyDrinksEditPage />} />
+              <Route exact path="/energydrinks/create" element={<EnergyDrinksCreatePage />} />
+            </>
+          )
+        }
+        
 
       </Routes>
     </BrowserRouter>

@@ -212,6 +212,29 @@ describe("AppNavbar tests", () => {
         await findByTestId(/appnavbar-ucsbdates-create/);
 
     });
+    test("renders the energydrink menu correctly for an admin", async () => {
+
+        const currentUser = currentUserFixtures.adminUser;
+        const systemInfo = systemInfoFixtures.showingBoth;
+
+        const doLogin = jest.fn();
+
+        const {getByTestId, findByTestId  } = render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <AppNavbar currentUser={currentUser} systemInfo={systemInfo} doLogin={doLogin} />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+        await findByTestId("appnavbar-energydrinks-dropdown");
+        const dropdown = getByTestId("appnavbar-energydrinks-dropdown");
+        const aElement = dropdown.querySelector("a");
+        expect(aElement).toBeInTheDocument();
+        aElement?.click();
+        await findByTestId(/appnavbar-energydrinks-create/);
+
+    });
 });
 
 
