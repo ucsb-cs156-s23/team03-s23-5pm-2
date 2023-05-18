@@ -18,6 +18,10 @@ export default function BookTable({
         navigate(`/books/edit/${cell.row.values.id}`);
     }
 
+    const detailCallback = (cell) => {
+        navigate(`/books/detail/${cell.row.values.id}`)
+    }
+
     // Stryker disable all : hard to test for query caching
     const deleteMutation = useBackendMutation(
         cellToAxiosParamsDelete,
@@ -50,6 +54,7 @@ export default function BookTable({
     ];
 
     if (hasRole(currentUser, "ROLE_ADMIN")) {
+        columns.push(ButtonColumn("Detail", "primary", detailCallback, BOOKS_TABLE_TEST_ID));
         columns.push(ButtonColumn("Edit", "primary", editCallback, BOOKS_TABLE_TEST_ID));
         columns.push(ButtonColumn("Delete", "danger", deleteCallback, BOOKS_TABLE_TEST_ID));
     }

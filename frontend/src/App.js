@@ -18,6 +18,7 @@ import { hasRole, useCurrentUser } from "main/utils/currentUser";
 import "bootstrap/dist/css/bootstrap.css";
 import BookEditPage from "main/pages/Books/BookEditPage";
 import BookIndexPage from "main/pages/Books/BookIndexPage";
+import BookDetailPage from "main/pages/Books/BookDetailPage";
 
 
 function App() {
@@ -69,6 +70,7 @@ function App() {
           hasRole(currentUser, "ROLE_USER") && (
             <>
             <Route exact path="/books/list" element={<BookIndexPage />} />
+            <Route exact path="/books/detail/:id" element={<BookDetailPage />} />
             </>
           )
         }
