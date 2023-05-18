@@ -2,6 +2,10 @@ import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import { useParams } from "react-router-dom";
 import RestaurantTable from 'main/components/Restaurants/RestaurantTable';
 import { restaurantUtils } from 'main/utils/restaurantUtils';
+import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
+import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
+import axios from "axios";
+import AxiosMockAdapter from "axios-mock-adapter";
 
 export default function RestaurantDetailsPage() {
   let { id } = useParams();
