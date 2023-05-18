@@ -1,4 +1,4 @@
-import { render, screen, act, waitFor, fireEvent } from "@testing-library/react";
+import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 import BookEditPage from "main/pages/Books/BookEditPage";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
@@ -110,15 +110,6 @@ describe("BookEditPage tests", () => {
 
         const cancelButton = screen.getByText("Cancel");
         expect(cancelButton).toBeInTheDocument();
-
-        await act(async () => {
-            fireEvent.change(titleInput, { target: { value: 'some mock title' } })
-            fireEvent.change(descriptionInput, { target: { value: 'some mock description' } })
-            fireEvent.change(authorInput, { target: { value: 'some mock author' } })
-            fireEvent.change(datePicker, { target: { value: '2023-04-27' } })
-            fireEvent.change(publisherInput, { target: { value: 'some mock publisher' } })
-            fireEvent.click(updateButton);
-        });
 
         await waitFor(() => expect(mockUpdate).toHaveBeenCalled());
         await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith("/books"));
