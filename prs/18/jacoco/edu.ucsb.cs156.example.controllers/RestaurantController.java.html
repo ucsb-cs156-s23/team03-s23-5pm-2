@@ -26,8 +26,8 @@ import javax.validation.Valid;
 @Api(description = &quot;Restaurant&quot;)
 @RequestMapping(&quot;/api/restaurants&quot;)
 @RestController
-<span class="nc" id="L29">@Slf4j</span>
-<span class="nc" id="L30">public class RestaurantController extends ApiController {</span>
+<span class="fc" id="L29">@Slf4j</span>
+<span class="fc" id="L30">public class RestaurantController extends ApiController {</span>
     
     @Autowired
     RestaurantRepository restaurantRepository;
@@ -36,8 +36,8 @@ import javax.validation.Valid;
     @PreAuthorize(&quot;hasRole('ROLE_USER')&quot;)
     @GetMapping(&quot;/all&quot;)
     public Iterable&lt;Restaurant&gt; allRestaurantss() {
-<span class="nc" id="L39">        Iterable&lt;Restaurant&gt; restaurants = restaurantRepository.findAll();</span>
-<span class="nc" id="L40">        return restaurants;</span>
+<span class="fc" id="L39">        Iterable&lt;Restaurant&gt; restaurants = restaurantRepository.findAll();</span>
+<span class="fc" id="L40">        return restaurants;</span>
     }
 
     @ApiOperation(value = &quot;Get a restaurant&quot;)
@@ -45,9 +45,9 @@ import javax.validation.Valid;
     @GetMapping(&quot;&quot;)
     public Restaurant getById(
             @ApiParam(&quot;id&quot;) @RequestParam Long id) {
-<span class="nc" id="L48">            Restaurant restaurant = restaurantRepository.findById(id)</span>
-<span class="nc" id="L49">                .orElseThrow(() -&gt; new EntityNotFoundException(Restaurant.class, id));</span>
-<span class="nc" id="L50">        return restaurant;</span>
+<span class="fc" id="L48">            Restaurant restaurant = restaurantRepository.findById(id)</span>
+<span class="fc" id="L49">                .orElseThrow(() -&gt; new EntityNotFoundException(Restaurant.class, id));</span>
+<span class="fc" id="L50">        return restaurant;</span>
     }
 
     @ApiOperation(value = &quot;Create a new restaurant&quot;)
@@ -60,14 +60,14 @@ import javax.validation.Valid;
         )
         {
 
-<span class="nc" id="L63">        Restaurant restaurant = new Restaurant();</span>
-<span class="nc" id="L64">        restaurant.setName(name);</span>
-<span class="nc" id="L65">        restaurant.setLocation(location);</span>
-<span class="nc" id="L66">        restaurant.setHasTakeOut(hasTakeOut);</span>
+<span class="fc" id="L63">        Restaurant restaurant = new Restaurant();</span>
+<span class="fc" id="L64">        restaurant.setName(name);</span>
+<span class="fc" id="L65">        restaurant.setLocation(location);</span>
+<span class="fc" id="L66">        restaurant.setHasTakeOut(hasTakeOut);</span>
 
-<span class="nc" id="L68">        Restaurant savedRestaurant = restaurantRepository.save(restaurant);</span>
+<span class="fc" id="L68">        Restaurant savedRestaurant = restaurantRepository.save(restaurant);</span>
 
-<span class="nc" id="L70">        return savedRestaurant;</span>
+<span class="fc" id="L70">        return savedRestaurant;</span>
     }
 
     @ApiOperation(value = &quot;Delete a restaurant&quot;)
@@ -75,11 +75,11 @@ import javax.validation.Valid;
     @DeleteMapping(&quot;&quot;)
     public Object deleteRestaurant(
             @ApiParam(&quot;id&quot;) @RequestParam Long id) {
-<span class="nc" id="L78">        Restaurant restaurant = restaurantRepository.findById(id)</span>
-<span class="nc" id="L79">                .orElseThrow(() -&gt; new EntityNotFoundException(Restaurant.class, id));</span>
+<span class="fc" id="L78">        Restaurant restaurant = restaurantRepository.findById(id)</span>
+<span class="fc" id="L79">                .orElseThrow(() -&gt; new EntityNotFoundException(Restaurant.class, id));</span>
 
-<span class="nc" id="L81">        restaurantRepository.delete(restaurant);</span>
-<span class="nc" id="L82">        return genericMessage(&quot;Restaurant with id %s deleted&quot;.formatted(id));</span>
+<span class="fc" id="L81">        restaurantRepository.delete(restaurant);</span>
+<span class="fc" id="L82">        return genericMessage(&quot;Restaurant with id %s deleted&quot;.formatted(id));</span>
     }
 
     @ApiOperation(value = &quot;Update a single restaurants&quot;)
@@ -89,17 +89,17 @@ import javax.validation.Valid;
             @ApiParam(&quot;id&quot;) @RequestParam Long id,
             @RequestBody @Valid Restaurant incoming) {
 
-<span class="nc" id="L92">        Restaurant restaurant = restaurantRepository.findById(id)</span>
-<span class="nc" id="L93">                .orElseThrow(() -&gt; new EntityNotFoundException(Restaurant.class, id));</span>
+<span class="fc" id="L92">        Restaurant restaurant = restaurantRepository.findById(id)</span>
+<span class="fc" id="L93">                .orElseThrow(() -&gt; new EntityNotFoundException(Restaurant.class, id));</span>
 
 
-<span class="nc" id="L96">        restaurant.setName(incoming.getName());  </span>
-<span class="nc" id="L97">        restaurant.setLocation(incoming.getLocation());</span>
-<span class="nc" id="L98">        restaurant.setHasTakeOut(incoming.getHasTakeOut());</span>
+<span class="fc" id="L96">        restaurant.setName(incoming.getName());  </span>
+<span class="fc" id="L97">        restaurant.setLocation(incoming.getLocation());</span>
+<span class="fc" id="L98">        restaurant.setHasTakeOut(incoming.getHasTakeOut());</span>
 
-<span class="nc" id="L100">        restaurantRepository.save(restaurant);</span>
+<span class="fc" id="L100">        restaurantRepository.save(restaurant);</span>
 
-<span class="nc" id="L102">        return restaurant;</span>
+<span class="fc" id="L102">        return restaurant;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
