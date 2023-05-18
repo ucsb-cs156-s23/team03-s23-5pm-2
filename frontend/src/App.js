@@ -14,7 +14,6 @@ import UCSBDatesEditPage from "main/pages/UCSBDates/UCSBDatesEditPage";
 import BookCreatePage from "main/pages/Books/BookCreatePage";
 import BookEditPage from "main/pages/Books/BookEditPage";
 import BookIndexPage from "main/pages/Books/BookIndexPage";
-import BookDetailsPage from "main/pages/Books/BookDetailsPage";
 
 import { hasRole, useCurrentUser } from "main/utils/currentUser";
 
