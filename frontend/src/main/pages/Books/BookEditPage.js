@@ -35,7 +35,7 @@ const BookEditPage = () => {
     });
 
     const onSuccess = (book) => {
-        toast.success(`Book Updated - id: ${book.id} title: ${book.title}`, {position: toast.POSITION.TOP_RIGHT});
+        toast.success(`Book Updated - id: ${book.id} title: ${book.title}`);
     }
 
     const mutation = useBackendMutation(

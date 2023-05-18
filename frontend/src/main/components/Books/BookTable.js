@@ -15,7 +15,6 @@ export default function BookTable({
     const navigate = useNavigate();
 
     const editCallback = (cell) => {
-        console.log("row id: ", cell.row.values.id);
         navigate(`/books/edit/${cell.row.values.id}`);
     }
 

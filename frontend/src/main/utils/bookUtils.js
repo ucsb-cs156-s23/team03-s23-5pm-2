@@ -1,7 +1,8 @@
 import { toast } from "react-toastify";
 
 export function onDeleteSuccess(message) {
-    toast.success(message.message, {position: toast.POSITION.TOP_RIGHT});
+    console.log(message);
+    toast.success(message.message);
 }
 
 export function cellToAxiosParamsDelete(cell) {

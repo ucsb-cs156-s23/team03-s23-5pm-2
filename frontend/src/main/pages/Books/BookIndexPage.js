@@ -16,8 +16,6 @@ export default function BookIndexPage() {
       []
     );
 
-    console.log("books", books)
-
     return (
         <BasicLayout>
             <div className="pt-2">

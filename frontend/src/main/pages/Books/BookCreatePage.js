@@ -17,7 +17,7 @@ const BookCreatePage = () => {
     });
 
     const onSuccess = (book) => {
-        toast.success(`New Book Created - id: ${book.id} title: ${book.title}`, {position: toast.POSITION.TOP_RIGHT});
+        toast.success(`New Book Created - id: ${book.id} title: ${book.title}`);
     }
 
     const mutation = useBackendMutation(
