@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for pages/Restaurants/RestaurantIndexPage.js</title>
+    <title>Code coverage report for pages/Energy Drinks/EnergyDrinkEditPage.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">pages/Restaurants</a> RestaurantIndexPage.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">pages/Energy Drinks</a> EnergyDrinkEditPage.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>10/10</span>
+                <span class='fraction'>0/8</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>0/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>9/9</span>
+                <span class='fraction'>0/8</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -91,12 +91,7 @@
 <a name='L26'></a><a href='#L26'>26</a>
 <a name='L27'></a><a href='#L27'>27</a>
 <a name='L28'></a><a href='#L28'>28</a>
-<a name='L29'></a><a href='#L29'>29</a>
-<a name='L30'></a><a href='#L30'>30</a>
-<a name='L31'></a><a href='#L31'>31</a>
-<a name='L32'></a><a href='#L32'>32</a>
-<a name='L33'></a><a href='#L33'>33</a>
-<a name='L34'></a><a href='#L34'>34</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L29'></a><a href='#L29'>29</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -104,21 +99,19 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -126,39 +119,31 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from 'react'
-import Button from 'react-bootstrap/Button';
-import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
-import RestaurantTable from 'main/components/Restaurants/RestaurantTable';
-import { restaurantUtils } from 'main/utils/restaurantUtils';
-import { useNavigate, Link } from 'react-router-dom';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
+import { useParams } from "react-router-dom";
+import { energydrinkUtils } from 'main/utils/energydrinkUtils';
+import EnergyDrinkForm from 'main/components/Energy Drinks/EnergyDrinkForm';
+import { useNavigate } from 'react-router-dom';
 &nbsp;
-export default function RestaurantIndexPage() {
 &nbsp;
-    const navigate = useNavigate();
+export default function <span class="fstat-no" title="function not covered" >EnergyDrinkEditPage(</span>) {
+    let { id } = <span class="cstat-no" title="statement not covered" >useParams();</span>
 &nbsp;
-    const restaurantCollection = restaurantUtils.get();
-    const restaurants = restaurantCollection.restaurants;
+    let navigate = <span class="cstat-no" title="statement not covered" >useNavigate();</span>
 &nbsp;
-    const showCell = (cell) =&gt; JSON.stringify(cell.row.values);
+    const response = <span class="cstat-no" title="statement not covered" >energydrinkUtils.getById(id);</span>
 &nbsp;
-    const deleteCallback = async (cell) =&gt; {
-        console.log(`RestaurantIndexPage deleteCallback: ${showCell(cell)})`);
-        restaurantUtils.del(cell.row.values.id);
-        navigate("/restaurants");
+    const onSubmit = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >as</span>ync (energydrink) =&gt; {</span>
+        const updatedEnergyDrink = <span class="cstat-no" title="statement not covered" >energydrinkUtils.update(energydrink);</span>
+<span class="cstat-no" title="statement not covered" >        console.log("updatedEnergyDrink: " + JSON.stringify(updatedEnergyDrink));</span>
+<span class="cstat-no" title="statement not covered" >        navigate("/energydrinks");</span>
     }
 &nbsp;
-    return (
+<span class="cstat-no" title="statement not covered" >    return (</span>
         &lt;BasicLayout&gt;
             &lt;div className="pt-2"&gt;
-                &lt;Button style={{ float: "right" }} as={Link} to="/restaurants/create"&gt;
-                    Create Restaurant
-                &lt;/Button&gt;
-                &lt;h1&gt;Restaurants&lt;/h1&gt;
-                &lt;RestaurantTable restaurants={restaurants} deleteCallback={deleteCallback} /&gt;
+                &lt;h1&gt;Edit EnergyDrink&lt;/h1&gt;
+                &lt;EnergyDrinkForm submitAction={onSubmit} buttonLabel={"Update"} initialContents={response.energydrink} /&gt;
             &lt;/div&gt;
         &lt;/BasicLayout&gt;
     )
@@ -169,7 +154,7 @@ export default function RestaurantIndexPage() {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Thu May 18 2023 15:02:59 GMT-0700 (Pacific Daylight Time)
+                at Thu May 18 2023 15:20:31 GMT-0700 (Pacific Daylight Time)
             </div>
         <script src="../../prettify.js"></script>
         <script>
