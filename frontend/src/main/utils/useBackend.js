@@ -30,12 +30,11 @@ export function useBackend(queryKey, axiosParameters, initialData) {
     return useQuery(queryKey, async () => {
         try {
             const response = await axios(axiosParameters);
-            // throw new Error('artificial time out!');
             return response.data;
         } catch (e) {
             const errorMessage = `Error communicating with backend via ${axiosParameters.method} on ${axiosParameters.url}`;
             toast(errorMessage);
-            console.log("Haha");
+            console.log("here line 37");
             console.error(errorMessage, e);
             throw e;
         }

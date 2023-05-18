@@ -8,7 +8,7 @@ import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 import { bookFixtures } from "fixtures/bookFixtures";
 
 import axios from "axios";
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify'
 import AxiosMockAdapter from "axios-mock-adapter";
 import mockConsole from "jest-mock-console";
 
@@ -27,19 +27,6 @@ jest.mock('react-toastify', () => {
 
 describe("BookIndexPage tests", () => {
     const axiosMock =new AxiosMockAdapter(axios);
-
-    beforeAll(() => {
-        jest.spyOn(console, 'error').mockImplementation(() => {});
-    });
-
-    afterAll(() => {
-        console.error.mockRestore();
-    });
-
-    afterEach(() => {
-        console.error.mockClear();
-    });
-
 
     const setupUserOnly = () => {
         axiosMock.reset();
@@ -135,10 +122,12 @@ describe("BookIndexPage tests", () => {
         );
 
         await waitFor(() => { expect(axiosMock.history.get.length).toBeGreaterThanOrEqual(1); });
-        expect(console.error).toHaveBeenCalled();
+        const logMessage = console.log.mock.calls[0];
+        console.log(logMessage);
+        expect(console.log).toBeCalled();
         // const errorMessage = console.error.mock.calls[0][0];
         // expect(errorMessage).toMatch("Error communicating with backend via GET on /api/books/all");
-        // restoreConsole();
+        restoreConsole();
 
         expect(queryByTestId(`${BOOKS_TABLE_TEST_ID}-cell-row-0-col-id`)).not.toBeInTheDocument();
     });

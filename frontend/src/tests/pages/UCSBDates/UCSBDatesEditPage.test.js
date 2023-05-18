@@ -52,7 +52,7 @@ describe("UCSBDatesEditPage tests", () => {
 
             const restoreConsole = mockConsole();
 
-            const {getByText, queryByTestId, findByText} = render(
+            const { queryByTestId, findByText} = render(
                 <QueryClientProvider client={queryClient}>
                     <MemoryRouter>
                         <UCSBDatesEditPage />
@@ -115,7 +115,6 @@ describe("UCSBDatesEditPage tests", () => {
             const quarterYYYYQField = getByTestId("UCSBDateForm-quarterYYYYQ");
             const nameField = getByTestId("UCSBDateForm-name");
             const localDateTimeField = getByTestId("UCSBDateForm-localDateTime");
-            const submitButton = getByTestId("UCSBDateForm-submit");
 
             expect(idField).toHaveValue("17");
             expect(quarterYYYYQField).toHaveValue("20221");
