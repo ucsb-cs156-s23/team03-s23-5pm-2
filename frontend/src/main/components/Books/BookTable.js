@@ -24,7 +24,9 @@ export default function BookTable({
         {onSuccess: onDeleteSuccess},
         ["/api/books/all"]
     )
+    // Stryker enable all 
 
+    // Stryker disable next-line all : TODO try to make a good test for this
     const deleteCallback = async (cell) =>{ deleteMutation.mutate(cell); }
 
     

@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 
 export function onDeleteSuccess(message) {
-    console.log(message);
+    console.log(message.message);
     toast.success(message.message);
 }
 

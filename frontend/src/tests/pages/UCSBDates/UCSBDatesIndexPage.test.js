@@ -142,7 +142,7 @@ describe("UCSBDatesIndexPage tests", () => {
 
         const queryClient = new QueryClient();
         axiosMock.onGet("/api/ucsbdates/all").reply(200, ucsbDatesFixtures.threeDates);
-        axiosMock.onDelete("/api/ucsbdates").reply(200, {message: "UCSBDate with id 1 was deleted"});
+        axiosMock.onDelete("/api/ucsbdates").reply(200, "UCSBDate with id 1 was deleted");
 
 
         const { getByTestId } = render(
