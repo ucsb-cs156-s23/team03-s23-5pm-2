@@ -1,4 +1,4 @@
-import { render, waitFor } from "@testing-library/react";
+import { render, waitFor, screen } from "@testing-library/react";
 import BookDetailPage from "main/pages/Books/BookDetailPage";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
@@ -102,32 +102,37 @@ describe("BookDetailPage tests", () => {
 
     });
 
-    // test('BookTable has the correct visible status', async () => {
-    //     setupUserOnly();
-    //     const queryClient = new QueryClient();
+    test('BookTable has the correct visible status', async () => {
+        setupUserOnly();
+        const queryClient = new QueryClient();
 
-    //     const newMock = jest.fn();
-    //     bookUtilModule.checkVisible = newMock;
+        const mockVisiBleCheck = jest.fn();
+        jest.mock('main/utils/bookUtils', () => {
+            return {
+                __esModule: true,
+                checkVisible: (x) => mockVisiBleCheck(x)
+            };
+        });
 
-    //     const book = {
-    //         id: 15,
-    //         title: "some test title",
-    //         author: "some test author",
-    //         date: "2023-04-17"
-    //     }
+        const book = {
+            id: 15,
+            title: "some test title",
+            author: "some test author",
+            date: "2023-04-17"
+        }
 
-    //     axiosMock.onGet("/api/books?id=15").reply(202, book);
+        axiosMock.onGet("/api/books?id=15").reply(202, book);
 
-    //     render(
-    //         <QueryClientProvider client={queryClient}>
-    //         <MemoryRouter>
-    //             <BookDetailPage />
-    //         </MemoryRouter>
-    //         </QueryClientProvider>
-    //     );
+        render(
+            <QueryClientProvider client={queryClient}>
+            <MemoryRouter>
+                <BookDetailPage />
+            </MemoryRouter>
+            </QueryClientProvider>
+        );
 
-    //     await waitFor(()=> {expect(newMock).toBeCalled()});
-    // });
+        expect(mockVisiBleCheck).toBeCalled();
+    });
 
 
     test('useBackend params are correct', async () => {

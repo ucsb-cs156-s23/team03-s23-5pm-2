@@ -54,6 +54,12 @@ export default function BookTable({
         },
     ];
 
+    // if (hasRole(currentUser, "ROLE_ADMIN") && actionVisible) {
+    //     columns.push(ButtonColumn("Detail", "primary", detailCallback, BOOKS_TABLE_TEST_ID));
+    //     columns.push(ButtonColumn("Edit", "primary", editCallback, BOOKS_TABLE_TEST_ID));
+    //     columns.push(ButtonColumn("Delete", "danger", deleteCallback, BOOKS_TABLE_TEST_ID));
+    // }
+
     if (hasRole(currentUser, "ROLE_ADMIN") && checkVisible(actionVisible)) {
         columns.push(ButtonColumn("Detail", "primary", detailCallback, BOOKS_TABLE_TEST_ID));
         columns.push(ButtonColumn("Edit", "primary", editCallback, BOOKS_TABLE_TEST_ID));
