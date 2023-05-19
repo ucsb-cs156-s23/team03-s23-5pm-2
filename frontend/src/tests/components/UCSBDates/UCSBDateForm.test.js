@@ -16,7 +16,7 @@ describe("UCSBDateForm tests", () => {
     test("renders correctly", async () => {
 
         const { getByText, findByText } = render(
-            <Router  >
+            <Router>
                 <UCSBDateForm />
             </Router>
         );

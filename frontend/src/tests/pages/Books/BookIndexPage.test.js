@@ -1,32 +1,32 @@
 import { fireEvent, render, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
-import UCSBDatesIndexPage from "main/pages/UCSBDates/UCSBDatesIndexPage";
 
-
+import BookIndexPage from "main/pages/Books/BookIndexPage";
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
-import { ucsbDatesFixtures } from "fixtures/ucsbDatesFixtures";
+import { bookFixtures } from "fixtures/bookFixtures";
+
 import axios from "axios";
+import { toast } from 'react-toastify'
 import AxiosMockAdapter from "axios-mock-adapter";
 import mockConsole from "jest-mock-console";
 
+const BOOKS_TABLE_TEST_ID = "BooksTable";
 
-const mockToast = jest.fn();
 jest.mock('react-toastify', () => {
     const originalModule = jest.requireActual('react-toastify');
     return {
         __esModule: true,
         ...originalModule,
-        toast: (x) => mockToast(x)
+        toast: {
+            success: jest.fn(),
+        },
     };
 });
 
-describe("UCSBDatesIndexPage tests", () => {
-
+describe("BookIndexPage tests", () => {
     const axiosMock =new AxiosMockAdapter(axios);
-
-    const testId = "UCSBDatesTable";
 
     const setupUserOnly = () => {
         axiosMock.reset();
@@ -45,127 +45,118 @@ describe("UCSBDatesIndexPage tests", () => {
     test("renders without crashing for regular user", () => {
         setupUserOnly();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/ucsbdates/all").reply(200, []);
+        axiosMock.onGet("/api/books/all").reply(200, []);
 
         render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <UCSBDatesIndexPage />
+                    <BookIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
-
-
     });
 
     test("renders without crashing for admin user", () => {
         setupAdminUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/ucsbdates/all").reply(200, []);
+        axiosMock.onGet("/api/books/all").reply(200, []);
 
         render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <UCSBDatesIndexPage />
+                    <BookIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
-
-
     });
 
-    test("renders three dates without crashing for regular user", async () => {
+    test("renders three books without crashing for regular user", async () => {
         setupUserOnly();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/ucsbdates/all").reply(200, ucsbDatesFixtures.threeDates);
-
+        axiosMock.onGet("/api/books/all").reply(200, bookFixtures.threeBooks );
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <UCSBDatesIndexPage />
+                    <BookIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
 
-        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1"); });
-        expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2");
-        expect(getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent("3");
-
+        await waitFor(() => { expect(getByTestId(`${BOOKS_TABLE_TEST_ID}-cell-row-0-col-id`)).toHaveTextContent("1"); });
+        expect(getByTestId(`${BOOKS_TABLE_TEST_ID}-cell-row-1-col-id`)).toHaveTextContent("2");
+        expect(getByTestId(`${BOOKS_TABLE_TEST_ID}-cell-row-2-col-id`)).toHaveTextContent("3");
     });
 
     test("renders three dates without crashing for admin user", async () => {
         setupAdminUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/ucsbdates/all").reply(200, ucsbDatesFixtures.threeDates);
+        axiosMock.onGet("/api/books/all").reply(200, bookFixtures.threeBooks);
 
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <UCSBDatesIndexPage />
+                    <BookIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
 
-        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1"); });
-        expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2");
-        expect(getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent("3");
-
+        await waitFor(() => { expect(getByTestId(`${BOOKS_TABLE_TEST_ID}-cell-row-0-col-id`)).toHaveTextContent("1"); });
+        expect(getByTestId(`${BOOKS_TABLE_TEST_ID}-cell-row-1-col-id`)).toHaveTextContent("2");
+        expect(getByTestId(`${BOOKS_TABLE_TEST_ID}-cell-row-2-col-id`)).toHaveTextContent("3");
     });
 
     test("renders empty table when backend unavailable, user only", async () => {
         setupUserOnly();
 
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/ucsbdates/all").timeout();
+        axiosMock.onGet("/api/books/all").timeout();
 
         const restoreConsole = mockConsole();
 
         const { queryByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <UCSBDatesIndexPage />
+                    <BookIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
 
         await waitFor(() => { expect(axiosMock.history.get.length).toBeGreaterThanOrEqual(1); });
 
+   
         const errorMessage = console.error.mock.calls[0][0];
-        expect(errorMessage).toMatch("Error communicating with backend via GET on /api/ucsbdates/all");
+        expect(errorMessage).toMatch("Error communicating with backend via GET on /api/books/all");
         restoreConsole();
 
-        expect(queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument();
+        expect(queryByTestId(`${BOOKS_TABLE_TEST_ID}-cell-row-0-col-id`)).not.toBeInTheDocument();
     });
 
     test("what happens when you click delete, admin", async () => {
         setupAdminUser();
 
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/ucsbdates/all").reply(200, ucsbDatesFixtures.threeDates);
-        axiosMock.onDelete("/api/ucsbdates").reply(200, "UCSBDate with id 1 was deleted");
+        axiosMock.onGet("/api/books/all").reply(200, bookFixtures.threeBooks );
+        axiosMock.onDelete("/api/books").reply(200, { message: "Book with id 1 was deleted"});
 
 
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <UCSBDatesIndexPage />
+                    <BookIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
 
-        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toBeInTheDocument(); });
+        await waitFor(() => { expect(getByTestId(`${BOOKS_TABLE_TEST_ID}-cell-row-0-col-id`)).toBeInTheDocument(); });
 
-       expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1"); 
+       expect(getByTestId(`${BOOKS_TABLE_TEST_ID}-cell-row-0-col-id`)).toHaveTextContent("1"); 
 
 
-        const deleteButton = getByTestId(`${testId}-cell-row-0-col-Delete-button`);
+        const deleteButton = getByTestId(`${BOOKS_TABLE_TEST_ID}-cell-row-0-col-Delete-button`);
         expect(deleteButton).toBeInTheDocument();
        
         fireEvent.click(deleteButton);
 
-        await waitFor(() => { expect(mockToast).toBeCalledWith("UCSBDate with id 1 was deleted") });
+        await waitFor(() => {expect(toast.success).toBeCalledWith("Book with id 1 was deleted") });
     });
-
 });
-
-

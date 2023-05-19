@@ -44,20 +44,20 @@ public class BookControllerTests extends ControllerTestCase {
 
         @Test
         public void logged_out_users_cannot_get_all() throws Exception {
-                mockMvc.perform(get("/api/book/all"))
+                mockMvc.perform(get("/api/books/all"))
                                 .andExpect(status().is(403)); // logged out users can't get all
         }
 
         @WithMockUser(roles = { "USER" })
         @Test
         public void logged_in_users_can_get_all() throws Exception {
-                mockMvc.perform(get("/api/book/all"))
+                mockMvc.perform(get("/api/books/all"))
                                 .andExpect(status().is(200)); // logged
         }
 
         @Test
         public void logged_out_users_cannot_get_by_id() throws Exception {
-                mockMvc.perform(get("/api/book?id=7"))
+                mockMvc.perform(get("/api/books?id=7"))
                                 .andExpect(status().is(403)); // logged out users can't get by id
         }
 
@@ -66,14 +66,14 @@ public class BookControllerTests extends ControllerTestCase {
 
         @Test
         public void logged_out_users_cannot_post() throws Exception {
-                mockMvc.perform(post("/api/book/post"))
+                mockMvc.perform(post("/api/books/post"))
                                 .andExpect(status().is(403));
         }
 
         @WithMockUser(roles = { "USER" })
         @Test
         public void logged_in_regular_users_cannot_post() throws Exception {
-                mockMvc.perform(post("/api/book/post"))
+                mockMvc.perform(post("/api/books/post"))
                                 .andExpect(status().is(403)); // only admins can post
         }
 
@@ -94,7 +94,7 @@ public class BookControllerTests extends ControllerTestCase {
                 when(bookRepository.findById(eq(7L))).thenReturn(Optional.of(book));
 
                 // act
-                MvcResult response = mockMvc.perform(get("/api/book?id=7"))
+                MvcResult response = mockMvc.perform(get("/api/books?id=7"))
                                 .andExpect(status().isOk()).andReturn();
 
                 // assert
@@ -114,7 +114,7 @@ public class BookControllerTests extends ControllerTestCase {
                 when(bookRepository.findById(eq(7L))).thenReturn(Optional.empty());
 
                 // act
-                MvcResult response = mockMvc.perform(get("/api/book?id=7"))
+                MvcResult response = mockMvc.perform(get("/api/books?id=7"))
                                 .andExpect(status().isNotFound()).andReturn();
 
                 // assert
@@ -149,7 +149,7 @@ public class BookControllerTests extends ControllerTestCase {
                 when(bookRepository.findAll()).thenReturn(expectedBook);
 
                 // act
-                MvcResult response = mockMvc.perform(get("/api/book/all"))
+                MvcResult response = mockMvc.perform(get("/api/books/all"))
                                 .andExpect(status().isOk()).andReturn();
 
                 // assert
@@ -168,14 +168,14 @@ public class BookControllerTests extends ControllerTestCase {
                 Book book1 = Book.builder()
                                 .title("firstDayOfClasses")
                                 .author("2022")
-                                .date("2023")
+                                .date("2023-02-15")
                                 .build();
 
                 when(bookRepository.save(eq(book1))).thenReturn(book1);
 
                 // act
                 MvcResult response = mockMvc.perform(
-                                post("/api/book/post?title=firstDayOfClasses&author=2022&date=2023")
+                                post("/api/books/post?title=firstDayOfClasses&author=2022&date=2023-02-15")
                                                 .with(csrf()))
                                 .andExpect(status().isOk()).andReturn();
 
@@ -188,20 +188,20 @@ public class BookControllerTests extends ControllerTestCase {
 
         @WithMockUser(roles = { "ADMIN", "USER" })
         @Test
-        public void admin_can_delete_a_date() throws Exception {
+        public void admin_can_delete_a_book() throws Exception {
                 // arrange
 
                 Book book1 = Book.builder()
                                 .title("firstDayOfClasses")
                                 .author("20222")
-                                .date("2023")
+                                .date("2023-02-24")
                                 .build();
 
                 when(bookRepository.findById(eq(15L))).thenReturn(Optional.of(book1));
 
                 // act
                 MvcResult response = mockMvc.perform(
-                                delete("/api/book?id=15")
+                                delete("/api/books?id=15")
                                                 .with(csrf()))
                                 .andExpect(status().isOk()).andReturn();
 
@@ -223,7 +223,7 @@ public class BookControllerTests extends ControllerTestCase {
 
                 // act
                 MvcResult response = mockMvc.perform(
-                                delete("/api/book?id=15")
+                                delete("/api/books?id=15")
                                                 .with(csrf()))
                                 .andExpect(status().isNotFound()).andReturn();
 
@@ -241,13 +241,13 @@ public class BookControllerTests extends ControllerTestCase {
                 Book bookOrig = Book.builder()
                                 .title("firstDayOfClasses")
                                 .author("20222")
-                                .date("2023")
+                                .date("2023-01-25")
                                 .build();
 
                 Book bookEdited = Book.builder()
                                 .title("firstDayOfFestivus")
                                 .author("20232")
-                                .date("2024")
+                                .date("2023-02-12")
                                 .build();
 
                 String requestBody = mapper.writeValueAsString(bookEdited);
@@ -256,7 +256,7 @@ public class BookControllerTests extends ControllerTestCase {
 
                 // act
                 MvcResult response = mockMvc.perform(
-                                put("/api/book?id=67")
+                                put("/api/books?id=67")
                                                 .contentType(MediaType.APPLICATION_JSON)
                                                 .characterEncoding("utf-8")
                                                 .content(requestBody)
@@ -278,7 +278,7 @@ public class BookControllerTests extends ControllerTestCase {
                 Book ucsbEditedDate = Book.builder()
                                 .title("firstDayOfClasses")
                                 .author("20222")
-                                .date("2023")
+                                .date("2023-01-15")
                                 .build();
 
                 String requestBody = mapper.writeValueAsString(ucsbEditedDate);
@@ -287,7 +287,7 @@ public class BookControllerTests extends ControllerTestCase {
 
                 // act
                 MvcResult response = mockMvc.perform(
-                                put("/api/book?id=67")
+                                put("/api/books?id=67")
                                                 .contentType(MediaType.APPLICATION_JSON)
                                                 .characterEncoding("utf-8")
                                                 .content(requestBody)
