@@ -102,7 +102,35 @@ describe("BookDetailPage tests", () => {
 
     });
 
-    test('test useBackend params are correct', async () => {
+    // test('BookTable has the correct visible status', async () => {
+    //     setupUserOnly();
+    //     const queryClient = new QueryClient();
+
+    //     const newMock = jest.fn();
+    //     bookUtilModule.checkVisible = newMock;
+
+    //     const book = {
+    //         id: 15,
+    //         title: "some test title",
+    //         author: "some test author",
+    //         date: "2023-04-17"
+    //     }
+
+    //     axiosMock.onGet("/api/books?id=15").reply(202, book);
+
+    //     render(
+    //         <QueryClientProvider client={queryClient}>
+    //         <MemoryRouter>
+    //             <BookDetailPage />
+    //         </MemoryRouter>
+    //         </QueryClientProvider>
+    //     );
+
+    //     await waitFor(()=> {expect(newMock).toBeCalled()});
+    // });
+
+
+    test('useBackend params are correct', async () => {
         setupUserOnly();
         const queryClient = new QueryClient();
 

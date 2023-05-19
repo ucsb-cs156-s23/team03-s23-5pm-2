@@ -137,6 +137,9 @@ describe("UserTable tests", () => {
         expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
         expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2");
         expect(getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent("3");
+        expect(getByTestId(`${testId}-cell-row-0-col-title`)).toHaveTextContent("Unbroken: A World War II Story of Survival, Resilience, and Redemption");
+        expect(getByTestId(`${testId}-cell-row-1-col-title`)).toHaveTextContent("The Wright Brothers");
+        expect(getByTestId(`${testId}-cell-row-2-col-title`)).toHaveTextContent("Into the Wild");
     });
 
     test("crud operation buttons render when actionInVisible is true", ()=>{
