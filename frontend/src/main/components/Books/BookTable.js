@@ -1,7 +1,7 @@
 import React from "react";
 import OurTable, { ButtonColumn } from "main/components/OurTable";
 import { useBackendMutation } from "main/utils/useBackend";
-import { cellToAxiosParamsDelete, checkVisible, onDeleteSuccess } from "main/utils/bookUtils";
+import { cellToAxiosParamsDelete, onDeleteSuccess } from "main/utils/bookUtils";
 import { useNavigate } from "react-router-dom";
 import {hasRole} from "main/utils/currentUser";
 
@@ -54,13 +54,7 @@ export default function BookTable({
         },
     ];
 
-    // if (hasRole(currentUser, "ROLE_ADMIN") && actionVisible) {
-    //     columns.push(ButtonColumn("Detail", "primary", detailCallback, BOOKS_TABLE_TEST_ID));
-    //     columns.push(ButtonColumn("Edit", "primary", editCallback, BOOKS_TABLE_TEST_ID));
-    //     columns.push(ButtonColumn("Delete", "danger", deleteCallback, BOOKS_TABLE_TEST_ID));
-    // }
-
-    if (hasRole(currentUser, "ROLE_ADMIN") && checkVisible(actionVisible)) {
+    if (hasRole(currentUser, "ROLE_ADMIN") && actionVisible) {
         columns.push(ButtonColumn("Detail", "primary", detailCallback, BOOKS_TABLE_TEST_ID));
         columns.push(ButtonColumn("Edit", "primary", editCallback, BOOKS_TABLE_TEST_ID));
         columns.push(ButtonColumn("Delete", "danger", deleteCallback, BOOKS_TABLE_TEST_ID));

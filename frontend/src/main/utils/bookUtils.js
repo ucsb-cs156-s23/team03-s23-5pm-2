@@ -14,7 +14,3 @@ export function cellToAxiosParamsDelete(cell) {
         }
     }
 }
-
-export function checkVisible(visible){
-    return visible;
-}
