@@ -23,4 +23,4 @@ repo_name: "TBD"
 repo: ucsb-cs156-s23/team03-s23-5pm-2
 owner: ucsb-cs156-s23
 repo_name: team03-s23-5pm-2
-pull_requests: [{"author":{"id":"MDQ6VXNlcjY0ODczNzQ2","is_bot":false,"login":"cherylstanley","name":"Cheryl Stanley"},"headRefName":"Cheryl-EnergyDrinks","number":26,"title":"Cheryl energy drinks","url":"https://github.com/ucsb-cs156-s23/team03-s23-5pm-2/pull/26"}]
+pull_requests: [{"author":{"id":"MDQ6VXNlcjU5NjY0ODg0","is_bot":false,"login":"LeonFeng0325","name":""},"headRefName":"Leon-increase-mutation-workflow-timeout","number":30,"title":"change workflow timeout from 40 to 60 minutes","url":"https://github.com/ucsb-cs156-s23/team03-s23-5pm-2/pull/30"},{"author":{"id":"MDQ6VXNlcjY0ODczNzQ2","is_bot":false,"login":"cherylstanley","name":"Cheryl Stanley"},"headRefName":"Cheryl-EnergyDrinks","number":26,"title":"Cheryl energy drinks","url":"https://github.com/ucsb-cs156-s23/team03-s23-5pm-2/pull/26"}]
