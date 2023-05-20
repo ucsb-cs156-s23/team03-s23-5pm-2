@@ -20,7 +20,7 @@ describe("restaurantUtils", () => {
             const restoreConsole = mockConsole();
 
             // act
-            onDeleteSuccess({ message: "abc" });
+            onDeleteSuccess("abc");
 
             // assert
             expect(mockToast).toHaveBeenCalledWith("abc");

@@ -47,20 +47,21 @@ export default function RestaurantEditPage() {
 
   const { isSuccess } = mutation
 
+  if (isSuccess) {
+    return <Navigate to="/restaurants/list" />
+  }
+
   const onSubmit = async (data) => {
     mutation.mutate(data);
   }
 
-  if (isSuccess) {
-    return <Navigate to="/restaurants/list" />
-  }
 
   return (
     <BasicLayout>
       <div className="pt-2">
         <h1>Edit Restaurant</h1>
         {restaurant &&
-          <RestaurantForm initialRestaurant={restaurant} submitAction={onSubmit} buttonLabel="Update" />
+          <RestaurantForm initialContents={restaurant} submitAction={onSubmit} buttonLabel="Update" />
         }
       </div>
     </BasicLayout>

@@ -1,8 +1,8 @@
 import { toast } from "react-toastify";
 
 export function onDeleteSuccess(message) {
-    console.log(message.message);
-    toast.success(message.message);
+    console.log(message);
+    toast(message);
 }
 
 export function cellToAxiosParamsDelete(cell) {
