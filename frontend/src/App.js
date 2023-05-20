@@ -20,6 +20,11 @@ import BookEditPage from "main/pages/Books/BookEditPage";
 import BookIndexPage from "main/pages/Books/BookIndexPage";
 import BookDetailPage from "main/pages/Books/BookDetailPage";
 
+import RestaurantCreatePage from "main/pages/Restaurants/RestaurantCreatePage";
+import RestaurantEditPage from "main/pages/Restaurants/RestaurantEditPage";
+import RestaurantIndexPage from "main/pages/Restaurants/RestaurantIndexPage";
+import RestaurantDetailPage from "main/pages/Restaurants/RestaurantDetailPage";
+
 
 function App() {
 
@@ -61,16 +66,32 @@ function App() {
         {
           hasRole(currentUser, "ROLE_ADMIN") && (
             <>
-            <Route exact path="/books/create" element={<BookCreatePage/>}/>
-            <Route exact path="books/edit/:id" element={<BookEditPage/>}/>
+              <Route exact path="/books/create" element={<BookCreatePage />} />
+              <Route exact path="books/edit/:id" element={<BookEditPage />} />
             </>
           )
         }
         {
           hasRole(currentUser, "ROLE_USER") && (
             <>
-            <Route exact path="/books/list" element={<BookIndexPage />} />
-            <Route exact path="/books/detail/:id" element={<BookDetailPage />} />
+              <Route exact path="/books/list" element={<BookIndexPage />} />
+              <Route exact path="/books/detail/:id" element={<BookDetailPage />} />
+            </>
+          )
+        }
+        {
+          hasRole(currentUser, "ROLE_ADMIN") && (
+            <>
+              <Route exact path="/restaurants/create" element={<RestaurantCreatePage />} />
+              <Route exact path="restaurants/edit/:id" element={<RestaurantEditPage />} />
+            </>
+          )
+        }
+        {
+          hasRole(currentUser, "ROLE_USER") && (
+            <>
+              <Route exact path="/restaurants/list" element={<RestaurantIndexPage />} />
+              <Route exact path="/restaurants/detail/:id" element={<RestaurantDetailPage />} />
             </>
           )
         }
