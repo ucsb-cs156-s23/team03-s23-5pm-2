@@ -1,4 +1,4 @@
-import { render, waitFor} from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 import { currentUserFixtures } from "fixtures/currentUserFixtures";
@@ -31,7 +31,7 @@ describe("AppNavbar tests", () => {
         const currentUser = currentUserFixtures.adminUser;
         const doLogin = jest.fn();
 
-        const { getByText , getByTestId, findByText } = render(
+        const { getByText, getByTestId, findByText } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
                     <AppNavbar currentUser={currentUser} doLogin={doLogin} />
@@ -41,7 +41,7 @@ describe("AppNavbar tests", () => {
 
         await findByText("Welcome, phtcon@ucsb.edu");
         const adminMenu = getByTestId("appnavbar-admin-dropdown");
-        expect(adminMenu).toBeInTheDocument();        
+        expect(adminMenu).toBeInTheDocument();
     });
 
     test("renders H2Console and Swagger links correctly", async () => {
@@ -51,7 +51,7 @@ describe("AppNavbar tests", () => {
 
         const doLogin = jest.fn();
 
-        const { getByText, findByText  } = render(
+        const { getByText, findByText } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
                     <AppNavbar currentUser={currentUser} systemInfo={systemInfo} doLogin={doLogin} />
@@ -61,7 +61,7 @@ describe("AppNavbar tests", () => {
 
         await findByText("H2Console");
         const swaggerMenu = getByText("Swagger");
-        expect(swaggerMenu).toBeInTheDocument();        
+        expect(swaggerMenu).toBeInTheDocument();
     });
 
 
@@ -72,7 +72,7 @@ describe("AppNavbar tests", () => {
 
         const doLogin = jest.fn();
 
-        const {getByTestId, findByTestId } = render(
+        const { getByTestId, findByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
                     <AppNavbar currentUser={currentUser} systemInfo={systemInfo} doLogin={doLogin} />
@@ -92,7 +92,7 @@ describe("AppNavbar tests", () => {
         delete window.location
         window.location = new URL('http://localhost:3000')
 
-        const {getByTestId, findByTestId } = render(
+        const { getByTestId, findByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
                     <AppNavbar currentUser={currentUser} systemInfo={systemInfo} doLogin={doLogin} />
@@ -112,7 +112,7 @@ describe("AppNavbar tests", () => {
         delete window.location
         window.location = new URL('http://127.0.0.1:3000')
 
-        const {getByTestId, findByTestId } = render(
+        const { getByTestId, findByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
                     <AppNavbar currentUser={currentUser} systemInfo={systemInfo} doLogin={doLogin} />
@@ -132,7 +132,7 @@ describe("AppNavbar tests", () => {
         delete window.location
         window.location = new URL('http://127.0.0.1:3000')
 
-        const {getByTestId, findByTestId } = render(
+        const { getByTestId, findByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
                     <AppNavbar currentUser={currentUser} systemInfo={systemInfo} doLogin={doLogin} />
@@ -153,7 +153,7 @@ describe("AppNavbar tests", () => {
         delete window.location
         window.location = new URL('http://localhost:8080')
 
-        const {getByTestId, queryByTestId, findByTestId } = render(
+        const { getByTestId, queryByTestId, findByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
                     <AppNavbar currentUser={currentUser} systemInfo={systemInfo} doLogin={doLogin} />
@@ -172,7 +172,7 @@ describe("AppNavbar tests", () => {
 
         const doLogin = jest.fn();
 
-        const {getByTestId, findByTestId  } = render(
+        const { getByTestId, findByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
                     <AppNavbar currentUser={currentUser} systemInfo={systemInfo} doLogin={doLogin} />
@@ -196,7 +196,7 @@ describe("AppNavbar tests", () => {
 
         const doLogin = jest.fn();
 
-        const {getByTestId, findByTestId  } = render(
+        const { getByTestId, findByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
                     <AppNavbar currentUser={currentUser} systemInfo={systemInfo} doLogin={doLogin} />
@@ -219,7 +219,7 @@ describe("AppNavbar tests", () => {
 
         const doLogin = jest.fn();
 
-        const {getByTestId, findByTestId  } = render(
+        const { getByTestId, findByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
                     <AppNavbar currentUser={currentUser} systemInfo={systemInfo} doLogin={doLogin} />
@@ -243,7 +243,7 @@ describe("AppNavbar tests", () => {
 
         const doLogin = jest.fn();
 
-        const {getByTestId, findByTestId  } = render(
+        const { getByTestId, findByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
                     <AppNavbar currentUser={currentUser} systemInfo={systemInfo} doLogin={doLogin} />
@@ -257,6 +257,53 @@ describe("AppNavbar tests", () => {
         expect(aElement).toBeInTheDocument();
         aElement?.click();
         await findByTestId(/appnavbar-books-create/);
+    });
+
+    test("renders the restaurants menu correctly for a user", async () => {
+
+        const currentUser = currentUserFixtures.userOnly;
+        const systemInfo = systemInfoFixtures.showingBoth;
+
+        const doLogin = jest.fn();
+
+        const { getByTestId, findByTestId } = render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <AppNavbar currentUser={currentUser} systemInfo={systemInfo} doLogin={doLogin} />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+        await findByTestId("appnavbar-restaurants-dropdown");
+        const dropdown = getByTestId("appnavbar-restaurants-dropdown");
+        const aElement = dropdown.querySelector("a");
+        expect(aElement).toBeInTheDocument();
+        aElement?.click();
+        await findByTestId("appnavbar-restaurants-list");
+
+    });
+
+    test("renders the restaurants menu correctly for an admin", async () => {
+
+        const currentUser = currentUserFixtures.adminUser;
+        const systemInfo = systemInfoFixtures.showingBoth;
+
+        const doLogin = jest.fn();
+
+        const { getByTestId, findByTestId } = render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <AppNavbar currentUser={currentUser} systemInfo={systemInfo} doLogin={doLogin} />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+        await findByTestId("appnavbar-restaurants-dropdown");
+        const dropdown = getByTestId("appnavbar-restaurants-dropdown");
+        const aElement = dropdown.querySelector("a");
+        expect(aElement).toBeInTheDocument();
+        aElement?.click();
+        await findByTestId(/appnavbar-restaurants-create/);
     });
 });
 
