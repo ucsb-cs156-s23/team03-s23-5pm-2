@@ -23,4 +23,4 @@ repo_name: "TBD"
 repo: ucsb-cs156-s23/team03-s23-5pm-2
 owner: ucsb-cs156-s23
 repo_name: team03-s23-5pm-2
-pull_requests: [{"author":{"id":"MDQ6VXNlcjU2MDUxNjQ2","is_bot":false,"login":"AlejandroRR16","name":""},"headRefName":"Alejandro_Restaurant_CRUD_Frontend","number":29,"title":"Added restaurant crud frontend and test","url":"https://github.com/ucsb-cs156-s23/team03-s23-5pm-2/pull/29"},{"author":{"id":"MDQ6VXNlcjY0ODczNzQ2","is_bot":false,"login":"cherylstanley","name":"Cheryl Stanley"},"headRefName":"Cheryl-EnergyDrinks","number":26,"title":"Cheryl energy drinks","url":"https://github.com/ucsb-cs156-s23/team03-s23-5pm-2/pull/26"}]
+pull_requests: [{"author":{"id":"MDQ6VXNlcjY0ODczNzQ2","is_bot":false,"login":"cherylstanley","name":"Cheryl Stanley"},"headRefName":"Cheryl-EnergyDrinks","number":26,"title":"Cheryl energy drinks","url":"https://github.com/ucsb-cs156-s23/team03-s23-5pm-2/pull/26"}]
