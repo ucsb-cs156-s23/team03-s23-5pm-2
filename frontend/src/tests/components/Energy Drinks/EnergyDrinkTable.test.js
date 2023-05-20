@@ -36,7 +36,43 @@ describe("EnergyDrinkTable tests", () => {
                 </MemoryRouter>
             </QueryClientProvider>
         );
-    });
+    }); 
+    test("renders without crashing for empty table with user not logged in", () => {
+        const currentUser = null;
+    
+        render(
+          <QueryClientProvider client={queryClient}>
+            <MemoryRouter>
+              <EnergyDrinkTable energydrinks={[]} currentUser={currentUser} />
+            </MemoryRouter>
+          </QueryClientProvider>
+    
+        );
+      });
+      test("renders without crashing for empty table for ordinary user", () => {
+        const currentUser = currentUserFixtures.userOnly;
+    
+        render(
+          <QueryClientProvider client={queryClient}>
+            <MemoryRouter>
+              <EnergyDrinkTable energydrinks={[]} currentUser={currentUser} />
+            </MemoryRouter>
+          </QueryClientProvider>
+    
+        );
+      });
+      test("renders without crashing for empty table for admin", () => {
+        const currentUser = currentUserFixtures.adminUser;
+    
+        render(
+          <QueryClientProvider client={queryClient}>
+            <MemoryRouter>
+              <EnergyDrinkTable energydrinks={[]} currentUser={currentUser} />
+            </MemoryRouter>
+          </QueryClientProvider>
+    
+        );
+      });
 
 
 
@@ -79,6 +115,47 @@ describe("EnergyDrinkTable tests", () => {
         expect(deleteButton).toHaveClass("btn-danger");
 
     });
+    
+  test("Has the expected colum headers and content for adminUser", () => {
+
+    const currentUser = currentUserFixtures.adminUser;
+
+    const { getByText, getByTestId } = render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <EnergyDrinkTable energydrinks={energydrinkFixtures.threeEnergyDrinks} currentUser={currentUser} />
+        </MemoryRouter>
+      </QueryClientProvider>
+
+    );
+
+    const expectedHeaders = ["id", "Name", "Caffeine", "Description"];
+    const expectedFields = ["id", "name", "caffeine", "description"];
+    const testId = "EnergyDrinkTable";
+
+
+    expectedHeaders.forEach((headerText) => {
+      const header = getByText(headerText);
+      expect(header).toBeInTheDocument();
+    });
+
+    expectedFields.forEach((field) => {
+      const header = getByTestId(`${testId}-cell-row-0-col-${field}`);
+      expect(header).toBeInTheDocument();
+    });
+
+    expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
+    expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2");
+
+    const editButton = getByTestId(`${testId}-cell-row-0-col-Edit-button`);
+    expect(editButton).toBeInTheDocument();
+    expect(editButton).toHaveClass("btn-primary");
+
+    const deleteButton = getByTestId(`${testId}-cell-row-0-col-Delete-button`);
+    expect(deleteButton).toBeInTheDocument();
+    expect(deleteButton).toHaveClass("btn-danger");
+
+  });
 
     test("Has the expected column headers, content and no buttons when showButtons=false", () => {
 
@@ -145,6 +222,29 @@ describe("EnergyDrinkTable tests", () => {
         expect(message).toMatch(expectedMessage);
         restoreConsole();
     });
+    test("Edit button navigates to the edit page for admin user", async () => {
+
+        const currentUser = currentUserFixtures.adminUser;
+    
+        const { getByText, getByTestId } = render(
+          <QueryClientProvider client={queryClient}>
+            <MemoryRouter>
+              <EnergyDrinkTable energydrinks={energydrinkFixtures.threeEnergyDrinks} currentUser={currentUser} />
+            </MemoryRouter>
+          </QueryClientProvider>
+    
+        );
+    
+        await waitFor(() => { expect(getByTestId(`EnergyDrinkTable-cell-row-0-col-id`)).toHaveTextContent("1"); });
+    
+        const editButton = getByTestId(`EnergyDrinkTable-cell-row-0-col-Edit-button`);
+        expect(editButton).toBeInTheDocument();
+        
+        fireEvent.click(editButton);
+    
+        await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith('/energydrinks/edit/1'));
+    
+      });
 
     test("Details button navigates to the details page", async () => {
         // arrange

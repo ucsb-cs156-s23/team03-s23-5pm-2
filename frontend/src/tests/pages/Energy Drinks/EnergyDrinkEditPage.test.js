@@ -1,127 +1,177 @@
-import { render, screen, act, waitFor, fireEvent } from "@testing-library/react";
-import EnergyDrinkEditPage from "main/pages/Energy Drinks/EnergyDrinkEditPage";
+import { fireEvent, queryByTestId, render, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
-import mockConsole from "jest-mock-console";
-import { apiCurrentUserFixtures }  from "fixtures/currentUserFixtures";
+import { EnergyDrinkEditPage } from "main/pages/Energy Drinks/EnergyDrinkEditPage";
+
+import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 
-const mockNavigate = jest.fn();
+import mockConsole from "jest-mock-console";
 
-jest.mock('react-router-dom', () => ({
-    ...jest.requireActual('react-router-dom'),
-    useParams: () => ({
-        id: 3
-    }),
-    useNavigate: () => mockNavigate
-}));
-
-const mockUpdate = jest.fn();
-jest.mock('main/utils/energydrinkUtils', () => {
+const mockToast = jest.fn();
+jest.mock('react-toastify', () => {
+    const originalModule = jest.requireActual('react-toastify');
     return {
         __esModule: true,
-        energydrinkUtils: {
-            update: (_energydrink) => { return mockUpdate(); },
-            getById: (_id) => {
-                return {
-                    energydrink: {
-                        id: 3,
-                        name: "C4",
-                        caffeine: "some mock caffeine content",
-                        description: "some mock description"
-                    }
-                }
-            }
-        }
-    }
+        ...originalModule,
+        toast: (x) => mockToast(x)
+    };
 });
 
+const mockNavigate = jest.fn();
+jest.mock('react-router-dom', () => {
+    const originalModule = jest.requireActual('react-router-dom');
+    return {
+        __esModule: true,
+        ...originalModule,
+        useParams: () => ({
+            id: 17
+        }),
+        Navigate: (x) => { mockNavigate(x); return null; }
+    };
+});
 
 describe("EnergyDrinkEditPage tests", () => {
-    const axiosMock =new AxiosMockAdapter(axios);
-    axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
-    axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither); 
-    const queryClient = new QueryClient();
 
-    test("renders without crashing", () => {
-        render(
-            <QueryClientProvider client={queryClient}>
-                <MemoryRouter>
-                    <EnergyDrinkEditPage />
-                </MemoryRouter>
-            </QueryClientProvider>
-        );
-    });
+    describe("when the backend doesn't return a todo", () => {
 
-    test("loads the correct fields", async () => {
+        const axiosMock = new AxiosMockAdapter(axios);
 
-        render(
-            <QueryClientProvider client={queryClient}>
-                <MemoryRouter>
-                    <EnergyDrinkEditPage />
-                </MemoryRouter>
-            </QueryClientProvider>
-        );
-
-        expect(screen.getByTestId("EnergyDrinkForm-name")).toBeInTheDocument();
-        expect(screen.getByDisplayValue('C4')).toBeInTheDocument();
-        expect(screen.getByDisplayValue('some mock caffeine content')).toBeInTheDocument();
-        expect(screen.getByDisplayValue('some mock description')).toBeInTheDocument();
-    });
-
-    test("redirects to /energydrinks on submit", async () => {
-
-        const restoreConsole = mockConsole();
-
-        mockUpdate.mockReturnValue({
-            "energydrink": {
-                id: 3,
-                name: "C4",
-                caffeine: "some mock caffeine content",
-                description: "some mock description"
-            }
+        beforeEach(() => {
+            axiosMock.reset();
+            axiosMock.resetHistory();
+            axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
+            axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
+            axiosMock.onGet("/api/energydrinks", { params: { id: 17 } }).timeout();
         });
 
-        render(
-            <QueryClientProvider client={queryClient}>
-                <MemoryRouter>
-                    <EnergyDrinkEditPage />
-                </MemoryRouter>
-            </QueryClientProvider>
-        )
+        const queryClient = new QueryClient();
+        test("renders header but table is not present", async () => {
 
-        const nameInput = screen.getByLabelText("Name");
-        expect(nameInput).toBeInTheDocument();
+            const restoreConsole = mockConsole();
 
-        const caffeineInput = screen.getByLabelText("Caffeine");
-        expect(caffeineInput).toBeInTheDocument();
-
-        const descriptionInput = screen.getByLabelText("Description");
-        expect(descriptionInput).toBeInTheDocument();
-
-        const updateButton = screen.getByText("Update");
-        expect(updateButton).toBeInTheDocument();
-
-        await act(async () => {
-            fireEvent.change(nameInput, { target: { value: 'C4' } })
-            fireEvent.change(caffeineInput, { target: { value: 'some mock caffeine content' } })
-            fireEvent.change(descriptionInput, { target: { value: 'some mock description' } })
-            fireEvent.click(updateButton);
+            const {getByText, queryByTestId, findByText} = render(
+                <QueryClientProvider client={queryClient}>
+                    <MemoryRouter>
+                        <EnergyDrinkEditPage />
+                    </MemoryRouter>
+                </QueryClientProvider>
+            );
+            await findByText("Edit EnergyDrink");
+            expect(queryByTestId("EnergyDrinkForm-name")).not.toBeInTheDocument();
+            restoreConsole();
         });
-
-        await waitFor(() => expect(mockUpdate).toHaveBeenCalled());
-        await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith("/energydrinks"));
-
-        // assert - check that the console.log was called with the expected message
-        expect(console.log).toHaveBeenCalled();
-        const message = console.log.mock.calls[0][0];
-        const expectedMessage = `updatedEnergyDrink: {"energydrink":{"id":3,"name":"C4","caffeine":"some mock caffeine content","description":"some mock description"}`
-
-        expect(message).toMatch(expectedMessage);
-        restoreConsole();
-
     });
 
+    describe("tests where backend is working normally", () => {
+
+        const axiosMock = new AxiosMockAdapter(axios);
+
+        beforeEach(() => {
+            axiosMock.reset();
+            axiosMock.resetHistory();
+            axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
+            axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
+            axiosMock.onGet("/api/energydrinks", { params: { id: 17 } }).reply(200, {
+                id: 17,
+                name: 'Gatorade Extreme',
+                caffeine: "100mg",
+                description: "A really good energy drink, gatorade with max caffeine"
+            });
+            axiosMock.onPut('/api/energydrinks').reply(200, {
+                id: "17",
+                name: 'Energy boba',
+                caffeine: "100mg",
+                description: "Energy drink boba for boba enthusiasts"
+            });
+        });
+
+        const queryClient = new QueryClient();
+        test("renders without crashing", () => {
+            render(
+                <QueryClientProvider client={queryClient}>
+                    <MemoryRouter>
+                        <EnergyDrinkEditPage />
+                    </MemoryRouter>
+                </QueryClientProvider>
+            );
+        });
+
+        test("Is populated with the data provided", async () => {
+
+            const { getByTestId, findByTestId } = render(
+                <QueryClientProvider client={queryClient}>
+                    <MemoryRouter>
+                        <EnergyDrinkEditPage />
+                    </MemoryRouter>
+                </QueryClientProvider>
+            );
+
+            await findByTestId("EnergyDrinkForm-name");
+
+            const idField = getByTestId("EnergyDrinkForm-id");
+            const nameField = getByTestId("EnergyDrinkForm-name");
+            const caffeineField = getByTestId("EnergyDrinkForm-caffeine");
+            const descriptionField = getByTestId("EnergyDrinkForm-description");
+            const submitButton = getByTestId("EnergyDrinkForm-submit");
+
+            expect(idField).toHaveValue("17");
+            expect(nameField).toHaveValue("Energy boba");
+            expect(caffeineField).toHaveValue("1000mg");
+            expect(descriptionField).toHaveValue("Energy drink boba for boba enthusiasts");
+        });
+
+        test("Changes when you click Update", async () => {
+
+
+
+            const { getByTestId, findByTestId } = render(
+                <QueryClientProvider client={queryClient}>
+                    <MemoryRouter>
+                        <EnergyDrinkEditPage />
+                    </MemoryRouter>
+                </QueryClientProvider>
+            );
+
+            await findByTestId("EnergyDrinkForm-name");
+
+            const idField = getByTestId("EnergyDrinkForm-id");
+            const nameField = getByTestId("EnergyDrinkForm-name");
+            const caffeineField = getByTestId("EnergyDrinkForm-caffeine");
+            const descriptionField = getByTestId("EnergyDrinkForm-description");
+            const submitButton = getByTestId("EnergyDrinkForm-submit");
+
+            expect(idField).toHaveValue("17");
+            expect(nameField).toHaveValue("Gatorade Extreme");
+            expect(caffeineField).toHaveValue("100mg");
+            expect(descriptionField).toHaveValue("A really good energy drink, gatorade with max caffeine");
+
+            expect(submitButton).toBeInTheDocument();
+
+            fireEvent.change(nameField, { target: { value: 'Energy boba' } })
+            fireEvent.change(caffeineField, { target: { value: '100mg' } })
+            fireEvent.change(descriptionField, { target: { value: "Energy drink boba for boba enthusiasts" } })
+
+            fireEvent.click(submitButton);
+
+            await waitFor(() => expect(mockToast).toBeCalled);
+            expect(mockToast).toBeCalledWith("EnergyDrink Updated - id: 17 name: Energy boba");
+            expect(mockNavigate).toBeCalledWith({ "to": "/energydrinks/list" });
+
+            expect(axiosMock.history.put.length).toBe(1); // times called
+            expect(axiosMock.history.put[0].params).toEqual({ id: 17 });
+            expect(axiosMock.history.put[0].data).toBe(JSON.stringify({
+                name: 'Energy boba',
+                caffeine: "100mg",
+                description: "Energy drink boba for boba enthusiasts"
+            })); // posted object
+
+        });
+
+       
+    });
 });
+
+

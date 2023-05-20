@@ -62,15 +62,16 @@ function App() {
          {
           hasRole(currentUser, "ROLE_USER") && (
             <>
-              <Route exact path="/energydrinks/list" element={<EnergyDrinksIndexPage />} />
+              <Route exact path="/energydrinks/list" element={<EnergyDrinkIndexPage />} />
+              <Route exact path="/energydrinks/detail/:id" element={<EnergyDrinkDetailsPage />} />
             </>
           )
         }
          {
           hasRole(currentUser, "ROLE_ADMIN") && (
             <>
-              <Route exact path="/energydrinks/edit/:id" element={<EnergyDrinksEditPage />} />
-              <Route exact path="/energydrinks/create" element={<EnergyDrinksCreatePage />} />
+              <Route exact path="/energydrinks/edit/:id" element={<EnergyDrinkEditPage />} />
+              <Route exact path="/energydrinks/create" element={<EnergyDrinkCreatePage />} />
             </>
           )
         }

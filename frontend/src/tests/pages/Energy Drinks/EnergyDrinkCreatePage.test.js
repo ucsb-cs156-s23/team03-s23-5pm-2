@@ -1,36 +1,47 @@
-import { render, screen, fireEvent, act, waitFor } from "@testing-library/react";
-import EnergyDrinkCreatePage from "main/pages/Energy Drinks/EnergyDrinkCreatePage";
+import { render, waitFor, fireEvent } from "@testing-library/react";
+import UCSBDatesCreatePage from "main/pages/UCSBDates/UCSBDatesCreatePage";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
-import mockConsole from "jest-mock-console";
-import { apiCurrentUserFixtures }  from "fixtures/currentUserFixtures";
+
+import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 
-const mockNavigate = jest.fn();
-jest.mock('react-router-dom', () => ({
-    ...jest.requireActual('react-router-dom'),
-    useNavigate: () => mockNavigate
-}));
 
-const mockAdd = jest.fn();
-jest.mock('main/utils/energydrinkUtils', () => {
+const mockToast = jest.fn();
+jest.mock('react-toastify', () => {
+    const originalModule = jest.requireActual('react-toastify');
     return {
         __esModule: true,
-        energydrinkUtils: {
-            add: () => { return mockAdd(); }
-        }
-    }
+        ...originalModule,
+        toast: (x) => mockToast(x)
+    };
+});
+
+const mockNavigate = jest.fn();
+jest.mock('react-router-dom', () => {
+    const originalModule = jest.requireActual('react-router-dom');
+    return {
+        __esModule: true,
+        ...originalModule,
+        Navigate: (x) => { mockNavigate(x); return null; }
+    };
 });
 
 describe("EnergyDrinkCreatePage tests", () => {
-    const axiosMock =new AxiosMockAdapter(axios);
-    axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
-    axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither); 
 
-    const queryClient = new QueryClient();
+    const axiosMock =new AxiosMockAdapter(axios);
+
+    beforeEach(() => {
+        axiosMock.reset();
+        axiosMock.resetHistory();
+        axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
+        axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
+    });
+
     test("renders without crashing", () => {
+        const queryClient = new QueryClient();
         render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
@@ -40,57 +51,57 @@ describe("EnergyDrinkCreatePage tests", () => {
         );
     });
 
-    test("redirects to /energydrinks on submit", async () => {
+    test("when you fill in the form and hit submit, it makes a request to the backend", async () => {
 
-        const restoreConsole = mockConsole();
+        const queryClient = new QueryClient();
+        const energyDrink = {
+            id: 17,
+            name: "RedBull Dupe",
+            caffeine: "8000 mg",
+            description: "Dupe of redbull, perfect for finals"
+        };
 
-        mockAdd.mockReturnValue({
-            "energydrink": {
-                id: 3,
-                name: "some mock name",
-                caffeine: "some mock caffeine content",
-                description: "some mock description"
-            }
-        });
+        axiosMock.onPost("/api/energydrinks/post").reply( 202, ucsbDate );
 
-        render(
+        const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
                     <EnergyDrinkCreatePage />
                 </MemoryRouter>
             </QueryClientProvider>
-        )
+        );
 
-        const nameInput = screen.getByLabelText("Name");
-        expect(nameInput).toBeInTheDocument();
-
-        const caffeineInput = screen.getByLabelText("Caffeine");
-        expect(caffeineInput).toBeInTheDocument();
-
-        const descriptionInput = screen.getByLabelText("Description");
-        expect(descriptionInput).toBeInTheDocument();
-
-        const createButton = screen.getByText("Create");
-        expect(createButton).toBeInTheDocument();
-
-        await act(async () => {
-            fireEvent.change(nameInput, { target: { value: 'some mock name' } })
-            fireEvent.change(caffeineInput, { target: { value: 'some mock caffeine content' } })
-            fireEvent.change(descriptionInput, { target: { value: 'some mock description' } })
-            fireEvent.click(createButton);
+        await waitFor(() => {
+            expect(getByTestId("EnergyDrinkForm-name")).toBeInTheDocument();
         });
 
-        await waitFor(() => expect(mockAdd).toHaveBeenCalled());
-        await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith("/energydrinks"));
+        const nameField = getByTestId("EnergyDrinkForm-name");
+        const caffeineField = getByTestId("EnergyDrinkForm-caffeine");
+        const descriptionField = getByTestId("EnergyDrinkForm-description");
+        const submitButton = getByTestId("EnergyDrinkForm-submit");
 
-        // assert - check that the console.log was called with the expected message
-        expect(console.log).toHaveBeenCalled();
-        const message = console.log.mock.calls[0][0];
-        const expectedMessage = `createdEnergyDrink: {"energydrink":{"id":3,"name":"some mock name","caffeine":"some mock caffeine content","description":"some mock description"}`
+        fireEvent.change(nameField, { target: { value: 'Random Energy Drink name' } });
+        fireEvent.change(caffeineField, { target: { value: '120 mg' } });
+        fireEvent.change(descriptionField, { target: { value: 'This is a description of a Random Energy Drink' } });
 
-        expect(message).toMatch(expectedMessage);
-        restoreConsole();
+        expect(submitButton).toBeInTheDocument();
 
+        fireEvent.click(submitButton);
+
+        await waitFor(() => expect(axiosMock.history.post.length).toBe(1));
+
+        expect(axiosMock.history.post[0].params).toEqual(
+            {
+            "description": "RandDrink is very good for you, better than RedBull",
+            "caffeine": "6000 mg",
+            "name": "RandDrink"
+        });
+
+        expect(mockToast).toBeCalledWith("New energyDrink Created - id: 17 name: Redbull Dupe");
+        expect(mockNavigate).toBeCalledWith({ "to": "/energydrinks/list" });
     });
 
+
 });
+
+
