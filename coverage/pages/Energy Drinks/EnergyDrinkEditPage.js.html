@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for pages/Restaurants/RestaurantEditPage.js</title>
+    <title>Code coverage report for pages/Energy Drinks/EnergyDrinkEditPage.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">pages/Restaurants</a> RestaurantEditPage.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">pages/Energy Drinks</a> EnergyDrinkEditPage.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -132,8 +132,7 @@
 <a name='L67'></a><a href='#L67'>67</a>
 <a name='L68'></a><a href='#L68'>68</a>
 <a name='L69'></a><a href='#L69'>69</a>
-<a name='L70'></a><a href='#L70'>70</a>
-<a name='L71'></a><a href='#L71'>71</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L70'></a><a href='#L70'>70</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -202,24 +201,23 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import { useParams } from "react-router-dom";
-import RestaurantForm from "main/components/Restaurants/RestaurantForm";
+import EnergyDrinkForm from "main/components/Energy Drinks/EnergyDrinkForm";
 import { Navigate } from 'react-router-dom'
 import { useBackend, useBackendMutation } from "main/utils/useBackend";
 import { toast } from "react-toastify";
 &nbsp;
-export default function RestaurantEditPage() {
+export default function EnergyDrinkEditPage() {
   let { id } = useParams();
 &nbsp;
-  const { data: restaurant, error, status } =
+  const { data: energydrink, error, status } =
     useBackend(
       // Stryker disable next-line all : don't test internal caching of React Query
-      [`/api/restaurants?id=${id}`],
+      [`/api/energydrinks?id=${id}`],
       {  // Stryker disable next-line all : GET is the default, so changing this to "" doesn't introduce a bug
         method: "GET",
-        url: `/api/restaurants`,
+        url: `/api/energydrinks`,
         params: {
           id
         }
@@ -227,33 +225,33 @@ export default function RestaurantEditPage() {
     );
 &nbsp;
 &nbsp;
-  const objectToAxiosPutParams = (restaurant) =&gt; ({
-    url: "/api/restaurants",
+  const objectToAxiosPutParams = (energydrink) =&gt; ({
+    url: "/api/energydrinks",
     method: "PUT",
     params: {
-      id: restaurant.id,
+      id: energydrink.id,
     },
     data: {
-      name: restaurant.name,
-      description: restaurant.description
+      name: energydrink.name,
+      description: energydrink.description
     }
   });
 &nbsp;
-  const onSuccess = (restaurant) =&gt; {
-    toast(`Restaurant Updated - id: ${restaurant.id} name: ${restaurant.name}`);
+  const onSuccess = (energydrink) =&gt; {
+    toast(`EnergyDrink Updated - id: ${energydrink.id} name: ${energydrink.name}`);
   }
 &nbsp;
   const mutation = useBackendMutation(
     objectToAxiosPutParams,
     { onSuccess },
     // Stryker disable next-line all : hard to set up test for caching
-    [`/api/restaurants?id=${id}`]
+    [`/api/energydrinks?id=${id}`]
   );
 &nbsp;
   const { isSuccess } = mutation
 &nbsp;
   if (isSuccess) {
-    return &lt;Navigate to="/restaurants/list" /&gt;
+    return &lt;Navigate to="/energydrinks/list" /&gt;
   }
 &nbsp;
   const onSubmit = async (data) =&gt; {
@@ -264,15 +262,14 @@ export default function RestaurantEditPage() {
   return (
     &lt;BasicLayout&gt;
       &lt;div className="pt-2"&gt;
-        &lt;h1&gt;Edit Restaurant&lt;/h1&gt;
-        {restaurant &amp;&amp;
-          &lt;RestaurantForm initialContents={restaurant} submitAction={onSubmit} buttonLabel="Update" /&gt;
+        &lt;h1&gt;Edit Energy Drink&lt;/h1&gt;
+        {energydrink &amp;&amp;
+          &lt;EnergyDrinkForm initialContents={energydrink} submitAction={onSubmit} buttonLabel="Update" /&gt;
         }
       &lt;/div&gt;
     &lt;/BasicLayout&gt;
   )
 }
-&nbsp;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->

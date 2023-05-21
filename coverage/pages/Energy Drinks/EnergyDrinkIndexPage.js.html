@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for pages/Restaurants/RestaurantIndexPage.js</title>
+    <title>Code coverage report for pages/Energy Drinks/EnergyDrinkIndexPage.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">pages/Restaurants</a> RestaurantIndexPage.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">pages/Energy Drinks</a> EnergyDrinkIndexPage.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -99,17 +99,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">20x</span>
+<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">20x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">20x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -121,18 +121,18 @@
 import { useBackend } from 'main/utils/useBackend';
 &nbsp;
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
-import RestaurantsTable from 'main/components/Restaurants/RestaurantTable';
+import EnergyDrinkTable from 'main/components/Energy Drinks/EnergyDrinkTable';
 import { useCurrentUser } from 'main/utils/currentUser'
 &nbsp;
-export default function RestaurantIndexPage() {
+export default function EnergyDrinkIndexPage() {
 &nbsp;
   const currentUser = useCurrentUser();
 &nbsp;
-  const { data: restaurants, error: _error, status: _status } =
+  const { data: energydrinks, error: _error, status: _status } =
     useBackend(
       // Stryker disable next-line all : don't test internal caching of React Query
-      ["/api/restaurants/all"],
-      { method: "GET", url: "/api/restaurants/all" },
+      ["/api/energydrinks/all"],
+      { method: "GET", url: "/api/energydrinks/all" },
       []
     );
 &nbsp;
@@ -140,7 +140,7 @@ export default function RestaurantIndexPage() {
     &lt;BasicLayout&gt;
       &lt;div className="pt-2"&gt;
         &lt;h1&gt;Restaurants&lt;/h1&gt;
-        &lt;RestaurantsTable restaurants={restaurants} currentUser={currentUser} /&gt;
+        &lt;EnergyDrinkTable energydrinks={energydrinks} currentUser={currentUser} /&gt;
       &lt;/div&gt;
     &lt;/BasicLayout&gt;
   )
