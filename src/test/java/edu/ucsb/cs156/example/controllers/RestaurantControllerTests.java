@@ -113,8 +113,7 @@ public class RestaurantControllerTests extends ControllerTestCase {
 
                 Restaurant restaurant = Restaurant.builder()
                                 .name("Zocalo")
-                                .location("901 Embarcadero del Mar")
-                                .hasTakeOut(true)
+                                .description("901 Embarcadero del Mar")
                                 .build();
 
                 when(restaurantRepository.findById(eq(7L))).thenReturn(Optional.of(restaurant));
@@ -157,14 +156,12 @@ public class RestaurantControllerTests extends ControllerTestCase {
 
                 Restaurant restaurant1 = Restaurant.builder()
                                 .name("Zocalo")
-                                .location("901 Embarcadero del Mar")
-                                .hasTakeOut(true)
+                                .description("901 Embarcadero del Mar")
                                 .build();
 
                 Restaurant restaurant2 = Restaurant.builder()
                                 .name("VONS Chicken")
-                                .location("955 Embarcadero del Mar,")
-                                .hasTakeOut(true)
+                                .description("955 Embarcadero del Mar,")
                                 .build();
 
                 ArrayList<Restaurant> expectedRestaurants = new ArrayList<>();
@@ -190,15 +187,14 @@ public class RestaurantControllerTests extends ControllerTestCase {
 
                 Restaurant restaurant1 = Restaurant.builder()
                                 .name("Zocalo")
-                                .location("901 Embarcadero del Mar")
-                                .hasTakeOut(true)
+                                .description("901 Embarcadero del Mar")
                                 .build();
 
                 when(restaurantRepository.save(eq(restaurant1))).thenReturn(restaurant1);
 
                 // act
                 MvcResult response = mockMvc.perform(
-                                post("/api/restaurants/post?name=Zocalo&location=901 Embarcadero del Mar&hasTakeOut=true")
+                                post("/api/restaurants/post?name=Zocalo&description=901 Embarcadero del Mar")
                                                 .with(csrf()))
                                 .andExpect(status().isOk()).andReturn();
 
@@ -215,8 +211,7 @@ public class RestaurantControllerTests extends ControllerTestCase {
 
                 Restaurant restaurant1 = Restaurant.builder()
                                 .name("Zocalo")
-                                .location("901 Embarcadero del Mar")
-                                .hasTakeOut(true)
+                                .description("901 Embarcadero del Mar")
                                 .build();
 
                 when(restaurantRepository.findById(eq(15L))).thenReturn(Optional.of(restaurant1));
@@ -261,14 +256,12 @@ public class RestaurantControllerTests extends ControllerTestCase {
 
                 Restaurant restaurantOrig = Restaurant.builder()
                                 .name("Zocalo")
-                                .location("901 Embarcadero del Mar")
-                                .hasTakeOut(true)
+                                .description("901 Embarcadero del Mar")
                                 .build();
 
                 Restaurant restaurantEdited = Restaurant.builder()
                                 .name("VONS Chicken")
-                                .location("955 Embarcadero del Mar")
-                                .hasTakeOut(false)
+                                .description("955 Embarcadero del Mar")
                                 .build();
 
                 String requestBody = mapper.writeValueAsString(restaurantEdited);
@@ -297,8 +290,7 @@ public class RestaurantControllerTests extends ControllerTestCase {
 
                 Restaurant editedRestaurant = Restaurant.builder()
                                 .name("Zocalo")
-                                .location("901 Embarcadero del Mar")
-                                .hasTakeOut(true)
+                                .description("901 Embarcadero del Mar")
                                 .build();
 
                 String requestBody = mapper.writeValueAsString(editedRestaurant);
