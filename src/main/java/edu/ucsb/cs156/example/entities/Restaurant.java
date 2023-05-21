@@ -21,6 +21,5 @@ public class Restaurant {
     private long id;
 
     private String name;
-    private String location;
-    private boolean hasTakeOut;
+    private String description;
 }
