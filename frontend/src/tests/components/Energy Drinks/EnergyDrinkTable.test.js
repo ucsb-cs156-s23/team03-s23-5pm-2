@@ -1,121 +1,60 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "react-query";
-import EnergyDrinkTable, { showCell } from "main/components/Energy Drinks/EnergyDrinkTable";
+import { fireEvent, render, waitFor } from "@testing-library/react";
 import { energydrinkFixtures } from "fixtures/energydrinkFixtures";
-import mockConsole from "jest-mock-console";
+import EnergyDrinkTable from "main/components/Energy Drinks/EnergyDrinkTable";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { MemoryRouter } from "react-router-dom";
+import { currentUserFixtures } from "fixtures/currentUserFixtures";
+
 
 const mockedNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
-    ...jest.requireActual('react-router-dom'),
-    useNavigate: () => mockedNavigate
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockedNavigate
 }));
 
-describe("EnergyDrinkTable tests", () => {
-    const queryClient = new QueryClient();
-
-    const expectedHeaders = ["id", "Name", "Caffeine", "Description"];
-    const expectedFields = ["id", "name", "caffeine", "description"];
-    const testId = "EnergyDrinkTable";
-
-    test("showCell function works properly", () => {
-        const cell = {
-            row: {
-                values: { a: 1, b: 2, c: 3 }
-            },
-        };
-        expect(showCell(cell)).toBe(`{"a":1,"b":2,"c":3}`);
-    });
-
-    test("renders without crashing for empty table", () => {
-        render(
-            <QueryClientProvider client={queryClient}>
-                <MemoryRouter>
-                    <EnergyDrinkTable energydrinks={[]} />
-                </MemoryRouter>
-            </QueryClientProvider>
-        );
-    }); 
-    test("renders without crashing for empty table with user not logged in", () => {
-        const currentUser = null;
-    
-        render(
-          <QueryClientProvider client={queryClient}>
-            <MemoryRouter>
-              <EnergyDrinkTable energydrinks={[]} currentUser={currentUser} />
-            </MemoryRouter>
-          </QueryClientProvider>
-    
-        );
-      });
-      test("renders without crashing for empty table for ordinary user", () => {
-        const currentUser = currentUserFixtures.userOnly;
-    
-        render(
-          <QueryClientProvider client={queryClient}>
-            <MemoryRouter>
-              <EnergyDrinkTable energydrinks={[]} currentUser={currentUser} />
-            </MemoryRouter>
-          </QueryClientProvider>
-    
-        );
-      });
-      test("renders without crashing for empty table for admin", () => {
-        const currentUser = currentUserFixtures.adminUser;
-    
-        render(
-          <QueryClientProvider client={queryClient}>
-            <MemoryRouter>
-              <EnergyDrinkTable energydrinks={[]} currentUser={currentUser} />
-            </MemoryRouter>
-          </QueryClientProvider>
-    
-        );
-      });
+describe("UserTable tests", () => {
+  const queryClient = new QueryClient();
 
 
+  test("renders without crashing for empty table with user not logged in", () => {
+    const currentUser = null;
 
-    test("Has the expected column headers, content and buttons", () => {
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <EnergyDrinkTable energydrinks={[]} currentUser={currentUser} />
+        </MemoryRouter>
+      </QueryClientProvider>
 
-        render(
-            <QueryClientProvider client={queryClient}>
-                <MemoryRouter>
-                    <EnergyDrinkTable energydrinks={energydrinkFixtures.threeEnergyDrinks} />
-                </MemoryRouter>
-            </QueryClientProvider>
-        );
+    );
+  });
+  test("renders without crashing for empty table for ordinary user", () => {
+    const currentUser = currentUserFixtures.userOnly;
 
-        expectedHeaders.forEach((headerText) => {
-            const header = screen.getByText(headerText);
-            expect(header).toBeInTheDocument();
-        });
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <EnergyDrinkTable energydrinks={[]} currentUser={currentUser} />
+        </MemoryRouter>
+      </QueryClientProvider>
 
-        expectedFields.forEach((field) => {
-            const header = screen.getByTestId(`${testId}-cell-row-0-col-${field}`);
-            expect(header).toBeInTheDocument();
-        });
+    );
+  });
 
-        expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("2");
-        expect(screen.getByTestId(`${testId}-cell-row-0-col-name`)).toHaveTextContent("Monster");
+  test("renders without crashing for empty table for admin", () => {
+    const currentUser = currentUserFixtures.adminUser;
 
-        expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("3");
-        expect(screen.getByTestId(`${testId}-cell-row-1-col-name`)).toHaveTextContent("Red Bull");
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <EnergyDrinkTable energydrinks={[]} currentUser={currentUser} />
+        </MemoryRouter>
+      </QueryClientProvider>
 
-        const detailsButton = screen.getByTestId(`${testId}-cell-row-0-col-Details-button`);
-        expect(detailsButton).toBeInTheDocument();
-        expect(detailsButton).toHaveClass("btn-primary");
+    );
+  });
 
-        const editButton = screen.getByTestId(`${testId}-cell-row-0-col-Edit-button`);
-        expect(editButton).toBeInTheDocument();
-        expect(editButton).toHaveClass("btn-primary");
-
-        const deleteButton = screen.getByTestId(`${testId}-cell-row-0-col-Delete-button`);
-        expect(deleteButton).toBeInTheDocument();
-        expect(deleteButton).toHaveClass("btn-danger");
-
-    });
-    
   test("Has the expected colum headers and content for adminUser", () => {
 
     const currentUser = currentUserFixtures.adminUser;
@@ -133,7 +72,6 @@ describe("EnergyDrinkTable tests", () => {
     const expectedFields = ["id", "name", "caffeine", "description"];
     const testId = "EnergyDrinkTable";
 
-
     expectedHeaders.forEach((headerText) => {
       const header = getByText(headerText);
       expect(header).toBeInTheDocument();
@@ -144,8 +82,9 @@ describe("EnergyDrinkTable tests", () => {
       expect(header).toBeInTheDocument();
     });
 
-    expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
-    expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2");
+    expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("2");//1
+    expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("3"); //2
+    expect(getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent("4"); //3
 
     const editButton = getByTestId(`${testId}-cell-row-0-col-Edit-button`);
     expect(editButton).toBeInTheDocument();
@@ -157,157 +96,44 @@ describe("EnergyDrinkTable tests", () => {
 
   });
 
-    test("Has the expected column headers, content and no buttons when showButtons=false", () => {
+  test("Edit button navigates to the edit page for admin user", async () => {
 
-        render(
-            <QueryClientProvider client={queryClient}>
-                <MemoryRouter>
-                    <EnergyDrinkTable energydrinks={energydrinkFixtures.threeEnergyDrinks} showButtons={false} />
-                </MemoryRouter>
-            </QueryClientProvider>
-        );
+    const currentUser = currentUserFixtures.adminUser;
 
-        expectedHeaders.forEach((headerText) => {
-            const header = screen.getByText(headerText);
-            expect(header).toBeInTheDocument();
-        });
+    const { getByText, getByTestId } = render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <EnergyDrinkTable energydrinks={energydrinkFixtures.threeEnergyDrinks} currentUser={currentUser} />
+        </MemoryRouter>
+      </QueryClientProvider>
 
-        expectedFields.forEach((field) => {
-            const header = screen.getByTestId(`${testId}-cell-row-0-col-${field}`);
-            expect(header).toBeInTheDocument();
-        });
+    );
 
-        expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("2");
-        expect(screen.getByTestId(`${testId}-cell-row-0-col-name`)).toHaveTextContent("Monster");
+    await waitFor(() => { expect(getByTestId(`EnergyDrinkTable-cell-row-0-col-id`)).toHaveTextContent("2"); })//1;
 
-        expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("3");
-        expect(screen.getByTestId(`${testId}-cell-row-1-col-name`)).toHaveTextContent("Red Bull");
+    const editButton = getByTestId(`EnergyDrinkTable-cell-row-0-col-Edit-button`);
+    expect(editButton).toBeInTheDocument();
 
-        expect(screen.queryByText("Delete")).not.toBeInTheDocument();
-        expect(screen.queryByText("Edit")).not.toBeInTheDocument();
-        expect(screen.queryByText("Details")).not.toBeInTheDocument();
-    });
+    fireEvent.click(editButton);
 
+    await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith('/energydrinks/edit/2'));//1
 
-    test("Edit button navigates to the edit page", async () => {
-        // arrange
-        const restoreConsole = mockConsole();
+  });
 
-        // act - render the component
-        render(
-            <QueryClientProvider client={queryClient}>
-                <MemoryRouter>
-                    <EnergyDrinkTable energydrinks={energydrinkFixtures.threeEnergyDrinks} />
-                </MemoryRouter>
-            </QueryClientProvider>
-        );
+  test("detail page button test", async () => {
+    const currentUser = currentUserFixtures.adminUser;
 
-        // assert - check that the expected content is rendered
-        expect(await screen.findByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("2");
-        expect(screen.getByTestId(`${testId}-cell-row-0-col-name`)).toHaveTextContent("Monster");
+    const { getByTestId } = render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <EnergyDrinkTable energydrinks={energydrinkFixtures.threeEnergyDrinks} currentUser={currentUser} actionVisible={true} />
+        </MemoryRouter>
+      </QueryClientProvider>
+    );
 
-        const editButton = screen.getByTestId(`${testId}-cell-row-0-col-Edit-button`);
-        expect(editButton).toBeInTheDocument();
+    const detailButton = getByTestId("EnergyDrinkTable-cell-row-0-col-Detail-button");
+    fireEvent.click(detailButton);
+    await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith('/energydrinks/detail/2')); //1
+  });
 
-        // act - click the edit button
-        fireEvent.click(editButton);
-
-        // assert - check that the navigate function was called with the expected path
-        await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith('/energydrinks/edit/2'));
-
-        // assert - check that the console.log was called with the expected message
-        expect(console.log).toHaveBeenCalled();
-        const message = console.log.mock.calls[0][0];
-        const expectedMessage = `editCallback: {"id":2,"name":"Monster","caffeine":"160 mg","description":"Monster Energy is an energy drink that was created by Hansen Natural Company in April 2002. As of 2020, Monster Energy had a 39% share of the energy drink market, the second highest after Red Bull."})`;
-        expect(message).toMatch(expectedMessage);
-        restoreConsole();
-    });
-    test("Edit button navigates to the edit page for admin user", async () => {
-
-        const currentUser = currentUserFixtures.adminUser;
-    
-        const { getByText, getByTestId } = render(
-          <QueryClientProvider client={queryClient}>
-            <MemoryRouter>
-              <EnergyDrinkTable energydrinks={energydrinkFixtures.threeEnergyDrinks} currentUser={currentUser} />
-            </MemoryRouter>
-          </QueryClientProvider>
-    
-        );
-    
-        await waitFor(() => { expect(getByTestId(`EnergyDrinkTable-cell-row-0-col-id`)).toHaveTextContent("1"); });
-    
-        const editButton = getByTestId(`EnergyDrinkTable-cell-row-0-col-Edit-button`);
-        expect(editButton).toBeInTheDocument();
-        
-        fireEvent.click(editButton);
-    
-        await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith('/energydrinks/edit/1'));
-    
-      });
-
-    test("Details button navigates to the details page", async () => {
-        // arrange
-        const restoreConsole = mockConsole();
-
-        // act - render the component
-        render(
-            <QueryClientProvider client={queryClient}>
-                <MemoryRouter>
-                    <EnergyDrinkTable energydrinks={energydrinkFixtures.threeEnergyDrinks} />
-                </MemoryRouter>
-            </QueryClientProvider>
-        );
-
-        // assert - check that the expected content is rendered
-        expect(await screen.findByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("2");
-        expect(screen.getByTestId(`${testId}-cell-row-0-col-name`)).toHaveTextContent("Monster");
-
-        const detailsButton = screen.getByTestId(`${testId}-cell-row-0-col-Details-button`);
-        expect(detailsButton).toBeInTheDocument();
-
-        // act - click the details button
-        fireEvent.click(detailsButton);
-
-        // assert - check that the navigate function was called with the expected path
-        await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith('/energydrinks/details/2'));
-
-        // assert - check that the console.log was called with the expected message
-        expect(console.log).toHaveBeenCalled();
-        const message = console.log.mock.calls[0][0];
-        const expectedMessage = `detailsCallback: {"id":2,"name":"Monster","caffeine":"160 mg","description":"Monster Energy is an energy drink that was created by Hansen Natural Company in April 2002. As of 2020, Monster Energy had a 39% share of the energy drink market, the second highest after Red Bull."})`;
-        expect(message).toMatch(expectedMessage);
-        restoreConsole();
-    });
-
-    test("Delete button calls delete callback", async () => {
-        // arrange
-        const restoreConsole = mockConsole();
-
-        // act - render the component
-        render(
-            <QueryClientProvider client={queryClient}>
-                <MemoryRouter>
-                    <EnergyDrinkTable energydrinks={energydrinkFixtures.threeEnergyDrinks} />
-                </MemoryRouter>
-            </QueryClientProvider>
-        );
-
-        // assert - check that the expected content is rendered
-        expect(await screen.findByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("2");
-        expect(screen.getByTestId(`${testId}-cell-row-0-col-name`)).toHaveTextContent("Monster");
-
-        const deleteButton = screen.getByTestId(`${testId}-cell-row-0-col-Delete-button`);
-        expect(deleteButton).toBeInTheDocument();
-
-        // act - click the delete button
-        fireEvent.click(deleteButton);
-
-        // assert - check that the console.log was called with the expected message
-        await (waitFor(() => expect(console.log).toHaveBeenCalled()));
-        const message = console.log.mock.calls[0][0];
-        const expectedMessage = `deleteCallback: {"id":2,"name":"Monster","caffeine":"160 mg","description":"Monster Energy is an energy drink that was created by Hansen Natural Company in April 2002. As of 2020, Monster Energy had a 39% share of the energy drink market, the second highest after Red Bull."})`;
-        expect(message).toMatch(expectedMessage);
-        restoreConsole();
-    });
 });

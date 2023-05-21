@@ -1,4 +1,24 @@
 // get energy drinks from local storage
+import { toast } from "react-toastify";
+import { useNavigate } from 'react-router-dom'
+
+export function onDeleteSuccess(message) {
+    console.log(message);
+    toast(message);
+}
+
+export function cellToAxiosParamsDelete(cell) {
+    return {
+        url: "/api/energydrinks",
+        method: "DELETE",
+        params: {
+            id: cell.row.values.id
+        }
+    }
+}
+
+
+
 const get = () => {
     const energydrinkValue = localStorage.getItem("energydrinks");//Gets the text of the value associated with the key "energydrinks" from browser local storage
     if (energydrinkValue === undefined) {
@@ -83,7 +103,9 @@ const energydrinkUtils = {
     getById,
     add,
     update,
-    del
+    del,
+    onDeleteSuccess,
+    cellToAxiosParamsDelete
 };
 
 export { energydrinkUtils };

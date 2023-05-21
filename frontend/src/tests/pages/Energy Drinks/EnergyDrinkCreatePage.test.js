@@ -1,5 +1,5 @@
 import { render, waitFor, fireEvent } from "@testing-library/react";
-import UCSBDatesCreatePage from "main/pages/UCSBDates/UCSBDatesCreatePage";
+import EnergyDrinkCreatePage from "main/pages/Energy Drinks/EnergyDrinkCreatePage";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 
@@ -7,6 +7,7 @@ import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
+import EnergyDrinkForm from "main/components/Energy Drinks/EnergyDrinkForm";
 
 
 const mockToast = jest.fn();
@@ -61,7 +62,7 @@ describe("EnergyDrinkCreatePage tests", () => {
             description: "Dupe of redbull, perfect for finals"
         };
 
-        axiosMock.onPost("/api/energydrinks/post").reply( 202, ucsbDate );
+        axiosMock.onPost("/api/energydrinks/post").reply( 202, energyDrink );
 
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
@@ -80,9 +81,9 @@ describe("EnergyDrinkCreatePage tests", () => {
         const descriptionField = getByTestId("EnergyDrinkForm-description");
         const submitButton = getByTestId("EnergyDrinkForm-submit");
 
-        fireEvent.change(nameField, { target: { value: 'Random Energy Drink name' } });
-        fireEvent.change(caffeineField, { target: { value: '120 mg' } });
-        fireEvent.change(descriptionField, { target: { value: 'This is a description of a Random Energy Drink' } });
+        fireEvent.change(nameField, { target: { value: 'RandDrink' } });
+        fireEvent.change(caffeineField, { target: { value: '6000 mg' } });
+        fireEvent.change(descriptionField, { target: { value: 'RandDrink is very good for you, better than RedBull' } });
 
         expect(submitButton).toBeInTheDocument();
 
@@ -97,7 +98,7 @@ describe("EnergyDrinkCreatePage tests", () => {
             "name": "RandDrink"
         });
 
-        expect(mockToast).toBeCalledWith("New energyDrink Created - id: 17 name: Redbull Dupe");
+        expect(mockToast).toBeCalledWith("New energyDrink Created - id: 17 name: RedBull Dupe");
         expect(mockNavigate).toBeCalledWith({ "to": "/energydrinks/list" });
     });
 

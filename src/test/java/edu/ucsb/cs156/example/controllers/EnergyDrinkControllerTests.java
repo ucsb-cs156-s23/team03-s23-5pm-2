@@ -90,8 +90,8 @@ public class EnergyDrinkControllerTests extends ControllerTestCase {
 
                 EnergyDrink energydrink = EnergyDrink.builder()
                                 .name("Red Bull")
-                                .flavor("Peach")
-                                .calories("150")
+                                .caffeine("Peach")
+                                .description("150")
                                 .build();
 
                 when(energydrinkRepository.findById(eq(7L))).thenReturn(Optional.of(energydrink));
@@ -136,16 +136,16 @@ public class EnergyDrinkControllerTests extends ControllerTestCase {
 
                 EnergyDrink energydrink1 = EnergyDrink.builder()
                                 .name("Red Bull")
-                                .flavor("Peach")
-                                .calories("150")
+                                .caffeine("Peach")
+                                .description("150")
                                 .build();
 
                 LocalDateTime ldt2 = LocalDateTime.parse("2022-03-11T00:00:00");
 
                 EnergyDrink energydrink2 = EnergyDrink.builder()
                                 .name("Monster")
-                                .flavor("Mango")
-                                .calories("170")
+                                .caffeine("Mango")
+                                .description("170")
                                 .build();
 
                 ArrayList<EnergyDrink> expectedEnergyDrink = new ArrayList<>();
@@ -174,15 +174,15 @@ public class EnergyDrinkControllerTests extends ControllerTestCase {
 
                 EnergyDrink energydrink1 = EnergyDrink.builder()
                                 .name("Red Bull")
-                                .flavor("Peach")
-                                .calories("150")
+                                .caffeine("Peach")
+                                .description("150")
                                 .build();
 
                 when(energydrinkRepository.save(eq(energydrink1))).thenReturn(energydrink1);
 
                 // act
                 MvcResult response = mockMvc.perform(
-                                post("/api/energydrink/post?name=Red Bull&flavor=Peach&calories=150")
+                                post("/api/energydrink/post?name=Red Bull&caffeine=Peach&description=150")
                                                 .with(csrf()))
                                 .andExpect(status().isOk()).andReturn();
 
@@ -195,15 +195,15 @@ public class EnergyDrinkControllerTests extends ControllerTestCase {
 
         @WithMockUser(roles = { "ADMIN", "USER" })
         @Test
-        public void admin_can_delete_a_calories() throws Exception {
+        public void admin_can_delete_a_description() throws Exception {
                 // arrange
 
                 LocalDateTime ldt1 = LocalDateTime.parse("2022-01-03T00:00:00");
 
                 EnergyDrink energydrink1 = EnergyDrink.builder()
                                 .name("Red Bull")
-                                .flavor("Peach")
-                                .calories("150")
+                                .caffeine("Peach")
+                                .description("150")
                                 .build();
 
                 when(energydrinkRepository.findById(eq(15L))).thenReturn(Optional.of(energydrink1));
@@ -249,14 +249,14 @@ public class EnergyDrinkControllerTests extends ControllerTestCase {
 
                 EnergyDrink energydrinkOrig = EnergyDrink.builder()
                                 .name("Red Bull")
-                                .flavor("Peach")
-                                .calories("150")
+                                .caffeine("Peach")
+                                .description("150")
                                 .build();
 
                 EnergyDrink energydrinkEdited = EnergyDrink.builder()
                                 .name("Monster")
-                                .flavor("Mango")
-                                .calories("170")
+                                .caffeine("Mango")
+                                .description("170")
                                 .build();
 
                 String requestBody = mapper.writeValueAsString(energydrinkEdited);
@@ -288,8 +288,8 @@ public class EnergyDrinkControllerTests extends ControllerTestCase {
 
                 EnergyDrink ucsbEditedDate = EnergyDrink.builder()
                                 .name("Red Bull")
-                                .flavor("Peach")
-                                .calories("150")
+                                .caffeine("Peach")
+                                .description("150")
                                 .build();
 
                 String requestBody = mapper.writeValueAsString(ucsbEditedDate);

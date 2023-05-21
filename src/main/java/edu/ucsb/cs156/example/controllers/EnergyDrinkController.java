@@ -43,13 +43,13 @@ public class EnergyDrinkController extends ApiController{
     @PostMapping("/post")
     public EnergyDrink postEnergyDrink(
         @ApiParam("name") @RequestParam String name,
-        @ApiParam("flavor") @RequestParam String flavor,
-        @ApiParam("calories") @RequestParam String calories
+        @ApiParam("caffeine") @RequestParam String caffeine,
+        @ApiParam("description") @RequestParam String description
     ) throws JsonProcessingException {
         EnergyDrink energydrink = new EnergyDrink();
         energydrink.setName(name);
-        energydrink.setFlavor(flavor);
-        energydrink.setCalories(calories);
+        energydrink.setCaffeine(caffeine);
+        energydrink.setDescription(description);
  
         EnergyDrink savedEnergyDrink = energydrinkRepository.save(energydrink);
         return savedEnergyDrink;
@@ -75,8 +75,8 @@ public class EnergyDrinkController extends ApiController{
 
         EnergyDrink energydrink = energydrinkRepository.findById(id).orElseThrow(()-> new EntityNotFoundException(EnergyDrink.class, id));
         energydrink.setName(incoming.getName());
-        energydrink.setFlavor(incoming.getFlavor());
-        energydrink.setCalories(incoming.getCalories());
+        energydrink.setCaffeine(incoming.getCaffeine());
+        energydrink.setDescription(incoming.getDescription());
 
         energydrinkRepository.save(energydrink);
         return energydrink;

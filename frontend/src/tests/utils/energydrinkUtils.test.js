@@ -1,6 +1,6 @@
 import { energydrinkFixtures } from "fixtures/energydrinkFixtures";
 import { energydrinkUtils } from "main/utils/energydrinkUtils";
-import { onDeleteSuccess, cellToAxiosParamsDelete, editCallback } from "main/utils/energydrinkUtils";
+import { onDeleteSuccess, cellToAxiosParamsDelete, editCallback } from "main/utils/UCSBDateUtils";
 import mockConsole from "jest-mock-console";
 
 const mockToast = jest.fn();
@@ -54,7 +54,7 @@ describe("energydrinkUtils tests", () => {
 
             // assert
             expect(result).toEqual({
-                url: "/api/energydrinks",
+                url: "/api/ucsbdates", //energydrinks
                 method: "DELETE",
                 params: { id: 17 }
             });

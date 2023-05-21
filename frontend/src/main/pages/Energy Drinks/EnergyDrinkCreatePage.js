@@ -1,5 +1,5 @@
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
-import UCSBDateForm from "main/components/UCSBDates/UCSBDateForm";
+import EnergyDrinkForm from "main/components/Energy Drinks/EnergyDrinkForm";
 import { Navigate } from 'react-router-dom'
 import { useBackendMutation } from "main/utils/useBackend";
 import { toast } from "react-toastify";
@@ -11,8 +11,8 @@ export default function EnergyDrinkCreatePage() {
     method: "POST",
     params: {
       name: energyDrink.name,
-      flavor: energyDrink.flavor,
-      calories: energyDrink.calories
+      caffeine: energyDrink.caffeine,
+      description: energyDrink.description
     }
   });
 
