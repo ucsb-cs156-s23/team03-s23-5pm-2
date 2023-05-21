@@ -1,5 +1,5 @@
 import { render, waitFor, fireEvent } from "@testing-library/react";
-import EnergyDrinkCreatePage from "main/pages/Energy Drinks/EnergyDrinkCreatePage";
+import EnergyDrinkCreatePage from "main/pages/EnergyDrinks/EnergyDrinkCreatePage";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 
@@ -7,7 +7,6 @@ import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
-import EnergyDrinkForm from "main/components/Energy Drinks/EnergyDrinkForm";
 
 
 const mockToast = jest.fn();
@@ -101,7 +100,6 @@ describe("EnergyDrinkCreatePage tests", () => {
         expect(mockToast).toBeCalledWith("New energyDrink Created - id: 17 name: RedBull Dupe");
         expect(mockNavigate).toBeCalledWith({ "to": "/energydrinks/list" });
     });
-
 
 });
 

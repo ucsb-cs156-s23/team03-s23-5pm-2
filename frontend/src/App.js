@@ -13,10 +13,10 @@ import UCSBDatesEditPage from "main/pages/UCSBDates/UCSBDatesEditPage";
 
 import BookCreatePage from "main/pages/Books/BookCreatePage";
 
-import EnergyDrinkIndexPage from "main/pages/Energy Drinks/EnergyDrinkIndexPage";
-import EnergyDrinkCreatePage from "main/pages/Energy Drinks/EnergyDrinkCreatePage";
-import EnergyDrinkEditPage from "main/pages/Energy Drinks/EnergyDrinkEditPage";
-import EnergyDrinkDetailsPage from "main/pages/Energy Drinks/EnergyDrinkDetailsPage";
+import EnergyDrinkIndexPage from "main/pages/EnergyDrinks/EnergyDrinkIndexPage";
+import EnergyDrinkCreatePage from "main/pages/EnergyDrinks/EnergyDrinkCreatePage";
+import EnergyDrinkEditPage from "main/pages/EnergyDrinks/EnergyDrinkEditPage";
+import EnergyDrinkDetailsPage from "main/pages/EnergyDrinks/EnergyDrinkDetailsPage";
 
 import { hasRole, useCurrentUser } from "main/utils/currentUser";
 

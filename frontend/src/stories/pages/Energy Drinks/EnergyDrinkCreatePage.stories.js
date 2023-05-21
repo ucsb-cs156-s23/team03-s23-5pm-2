@@ -1,7 +1,7 @@
 
 import React from 'react';
 
-import { EnergyDrinkCreatePage } from 'main/pages/Energy Drinks/EnergyDrinkCreatePage';
+import { EnergyDrinkCreatePage } from 'main/pages/EnergyDrinks/EnergyDrinkCreatePage';
 
 
 export default {

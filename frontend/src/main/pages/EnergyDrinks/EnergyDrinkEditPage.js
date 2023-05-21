@@ -1,6 +1,6 @@
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import { useParams } from "react-router-dom";
-import EnergyDrinkForm from "main/components/Energy Drinks/EnergyDrinkForm";
+import EnergyDrinkForm from "main/components/EnergyDrinks/EnergyDrinkForm";
 import { Navigate } from 'react-router-dom'
 import { useBackend, useBackendMutation } from "main/utils/useBackend";
 import { toast } from "react-toastify";
@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 export default function EnergyDrinkEditPage() {
   let { id } = useParams();
 
-  const { data: energydrink, error, status } =
+  const { data: energyDrink, error, status } =
     useBackend(
       // Stryker disable next-line all : don't test internal caching of React Query
       [`/api/energydrinks?id=${id}`],
@@ -22,20 +22,21 @@ export default function EnergyDrinkEditPage() {
     );
 
 
-  const objectToAxiosPutParams = (energydrink) => ({
+  const objectToAxiosPutParams = (energyDrink) => ({
     url: "/api/energydrinks",
     method: "PUT",
     params: {
-      id: energydrink.id,
+      id: energyDrink.id,
     },
     data: {
-      name: energydrink.name,
-      description: energydrink.description
+      name: energyDrink.name,
+      description: energyDrink.description,
+      caffeine: energyDrink.caffeine
     }
   });
 
-  const onSuccess = (energydrink) => {
-    toast(`EnergyDrink Updated - id: ${energydrink.id} name: ${energydrink.name}`);
+  const onSuccess = (energyDrink) => {
+    toast(`EnergyDrink Updated - id: ${energyDrink.id} name: ${energyDrink.name}`);
   }
 
   const mutation = useBackendMutation(
@@ -60,8 +61,8 @@ export default function EnergyDrinkEditPage() {
     <BasicLayout>
       <div className="pt-2">
         <h1>Edit Energy Drink</h1>
-        {energydrink &&
-          <EnergyDrinkForm initialContents={energydrink} submitAction={onSubmit} buttonLabel="Update" />
+        {energyDrink &&
+          <EnergyDrinkForm initialContents={energyDrink} submitAction={onSubmit} buttonLabel="Update" />
         }
       </div>
     </BasicLayout>

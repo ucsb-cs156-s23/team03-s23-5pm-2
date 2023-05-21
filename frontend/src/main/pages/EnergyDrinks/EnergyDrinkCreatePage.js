@@ -1,5 +1,5 @@
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
-import EnergyDrinkForm from "main/components/Energy Drinks/EnergyDrinkForm";
+import EnergyDrinkForm from "main/components/EnergyDrinks/EnergyDrinkForm";
 import { Navigate } from 'react-router-dom'
 import { useBackendMutation } from "main/utils/useBackend";
 import { toast } from "react-toastify";

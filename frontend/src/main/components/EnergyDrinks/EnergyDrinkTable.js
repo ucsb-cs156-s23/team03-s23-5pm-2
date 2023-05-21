@@ -5,7 +5,7 @@ import { cellToAxiosParamsDelete, onDeleteSuccess } from "main/utils/energydrink
 import { useNavigate } from "react-router-dom";
 import { hasRole } from "main/utils/currentUser";
 
-export default function RestaurantTable({ energydrinks, currentUser, actionVisible = true }) {
+export default function RestaurantTable({ energyDrinks, currentUser, actionVisible = true }) {
 
     const navigate = useNavigate();
 
@@ -22,7 +22,7 @@ export default function RestaurantTable({ energydrinks, currentUser, actionVisib
     const deleteMutation = useBackendMutation(
         cellToAxiosParamsDelete,
         { onSuccess: onDeleteSuccess },
-        ["/api/restaurants/all"]
+        ["/api/energydrinks/all"]
     );
     // Stryker enable all 
 
@@ -57,7 +57,7 @@ export default function RestaurantTable({ energydrinks, currentUser, actionVisib
 
     // Stryker disable next-line ArrayDeclaration : [columns] is a performance optimization
     const memoizedColumns = React.useMemo(() => columns, [columns]);
-    const memoizedEnergyDrinks = React.useMemo(() => energydrinks, [energydrinks]);
+    const memoizedEnergyDrinks = React.useMemo(() => energyDrinks, [energyDrinks]);
 
     return <OurTable
         data={memoizedEnergyDrinks}

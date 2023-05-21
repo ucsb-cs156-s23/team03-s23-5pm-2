@@ -1,4 +1,4 @@
-import { render, waitFor, screen } from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 import BookDetailPage from "main/pages/Books/BookDetailPage";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
@@ -7,7 +7,6 @@ import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 import mockConsole from "jest-mock-console";
 import * as backendModule from "main/utils/useBackend";
-import * as bookUtilModule from "main/utils/bookUtils";
 
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";

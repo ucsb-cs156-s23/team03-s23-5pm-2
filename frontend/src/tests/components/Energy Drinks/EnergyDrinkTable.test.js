@@ -1,6 +1,6 @@
 import { fireEvent, render, waitFor } from "@testing-library/react";
 import { energydrinkFixtures } from "fixtures/energydrinkFixtures";
-import EnergyDrinkTable from "main/components/Energy Drinks/EnergyDrinkTable";
+import EnergyDrinkTable from "main/components/EnergyDrinks/EnergyDrinkTable";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 import { currentUserFixtures } from "fixtures/currentUserFixtures";
@@ -23,7 +23,7 @@ describe("UserTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <EnergyDrinkTable energydrinks={[]} currentUser={currentUser} />
+          <EnergyDrinkTable energyDrinks={[]} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
 
@@ -35,7 +35,7 @@ describe("UserTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <EnergyDrinkTable energydrinks={[]} currentUser={currentUser} />
+          <EnergyDrinkTable energyDrinks={[]} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
 
@@ -48,7 +48,7 @@ describe("UserTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <EnergyDrinkTable energydrinks={[]} currentUser={currentUser} />
+          <EnergyDrinkTable energyDrinks={[]} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
 
@@ -62,7 +62,7 @@ describe("UserTable tests", () => {
     const { getByText, getByTestId } = render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <EnergyDrinkTable energydrinks={energydrinkFixtures.threeEnergyDrinks} currentUser={currentUser} />
+          <EnergyDrinkTable energyDrinks={energydrinkFixtures.threeEnergyDrinks} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
 
@@ -100,10 +100,10 @@ describe("UserTable tests", () => {
 
     const currentUser = currentUserFixtures.adminUser;
 
-    const { getByText, getByTestId } = render(
+    const { getByTestId } = render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <EnergyDrinkTable energydrinks={energydrinkFixtures.threeEnergyDrinks} currentUser={currentUser} />
+          <EnergyDrinkTable energyDrinks={energydrinkFixtures.threeEnergyDrinks} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
 
@@ -126,7 +126,7 @@ describe("UserTable tests", () => {
     const { getByTestId } = render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <EnergyDrinkTable energydrinks={energydrinkFixtures.threeEnergyDrinks} currentUser={currentUser} actionVisible={true} />
+          <EnergyDrinkTable energyDrinks={energydrinkFixtures.threeEnergyDrinks} currentUser={currentUser} actionVisible={true} />
         </MemoryRouter>
       </QueryClientProvider>
     );

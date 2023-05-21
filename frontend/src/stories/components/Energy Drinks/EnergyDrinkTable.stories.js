@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { EnergyDrinkTable } from 'main/components/Energy Drinks/EnergyDrinkTable';
+import { EnergyDrinkTable } from 'main/components/EnergyDrinks/EnergyDrinkTable';
 import { energydrinkFixtures } from 'fixtures/energydrinkFixtures';
 
 export default {

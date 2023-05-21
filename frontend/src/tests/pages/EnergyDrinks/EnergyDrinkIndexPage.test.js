@@ -8,7 +8,7 @@ import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 import mockConsole from "jest-mock-console";
 import { energydrinkFixtures } from "fixtures/energydrinkFixtures";
-import EnergyDrinkIndexPage from "main/pages/Energy Drinks/EnergyDrinkIndexPage";
+import EnergyDrinkIndexPage from "main/pages/EnergyDrinks/EnergyDrinkIndexPage";
 
 
 const mockToast = jest.fn();

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { EnergyDrinkForm } from 'main/components/Energy Drinks/EnergyDrinkForm';
+import { EnergyDrinkForm } from 'main/components/EnergyDrinks/EnergyDrinkForm';
 import { energydrinkFixtures } from 'fixtures/energydrinkFixtures';
 
 export default {
