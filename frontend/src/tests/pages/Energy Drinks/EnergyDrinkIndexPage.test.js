@@ -73,43 +73,43 @@ describe("EnergyDrinkIndexPage tests", () => {
 
     });
 
-    // test("renders three energy drinks without crashing for regular user", async () => {
-    //     setupUserOnly();
-    //     const queryClient = new QueryClient();
-    //     axiosMock.onGet("/api/energydrinks/all").reply(200, energydrinkFixtures.threeEnergyDrinks);
+    test("renders three energy drinks without crashing for regular user", async () => {
+        setupUserOnly();
+        const queryClient = new QueryClient();
+        axiosMock.onGet("/api/energydrinks/all").reply(200, energydrinkFixtures.threeEnergyDrinks);
 
-    //     const { getByTestId } = render(
-    //         <QueryClientProvider client={queryClient}>
-    //             <MemoryRouter>
-    //                 <EnergyDrinkIndexPage />
-    //             </MemoryRouter>
-    //         </QueryClientProvider>
-    //     );
+        const { getByTestId } = render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <EnergyDrinkIndexPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
 
-    //     await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1"); });
-    //     expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2");
-    //     expect(getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent("3");
+        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("2"); });//1
+        expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("3"); //2
+        expect(getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent("4");//3
 
-    // });
+    });
 
-    // test("renders three energy drinks without crashing for admin user", async () => {
-    //     setupAdminUser();
-    //     const queryClient = new QueryClient();
-    //     axiosMock.onGet("/api/energydrinks/all").reply(200, energydrinkFixtures.threeEnergyDrinks);
+    test("renders three energy drinks without crashing for admin user", async () => {
+        setupAdminUser();
+        const queryClient = new QueryClient();
+        axiosMock.onGet("/api/energydrinks/all").reply(200, energydrinkFixtures.threeEnergyDrinks);
 
-    //     const { getByTestId } = render(
-    //         <QueryClientProvider client={queryClient}>
-    //             <MemoryRouter>
-    //                 <EnergyDrinkIndexPage />
-    //             </MemoryRouter>
-    //         </QueryClientProvider>
-    //     );
+        const { getByTestId } = render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <EnergyDrinkIndexPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
 
-    //     await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1"); });
-    //     expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2");
-    //     expect(getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent("3");
+        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("2"); }); //1
+        expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("3"); //2
+        expect(getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent("4"); //3
 
-    // });
+    });
 
     test("renders empty table when backend unavailable, user only", async () => {
         setupUserOnly();
