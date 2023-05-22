@@ -23,4 +23,4 @@ repo_name: "TBD"
 repo: ucsb-cs156-s23/team03-s23-5pm-2
 owner: ucsb-cs156-s23
 repo_name: team03-s23-5pm-2
-pull_requests: [{"author":{"id":"MDQ6VXNlcjg2NzQ0NDUx","is_bot":false,"login":"yqin01","name":"Yicheng Qin"},"headRefName":"Tim-test-EnergyDrinks","number":35,"title":"Tim test energy drinks","url":"https://github.com/ucsb-cs156-s23/team03-s23-5pm-2/pull/35"},{"author":{"id":"MDQ6VXNlcjY0ODczNzQ2","is_bot":false,"login":"cherylstanley","name":"Cheryl Stanley"},"headRefName":"Cheryl-EnergyDrinks","number":32,"title":"Cheryl energy drinks","url":"https://github.com/ucsb-cs156-s23/team03-s23-5pm-2/pull/32"}]
+pull_requests: [{"author":{"id":"MDQ6VXNlcjcyOTAxMTI4","is_bot":false,"login":"jtmnguyen","name":""},"headRefName":"jessica-testing-energy-drinks","number":36,"title":"JCT-testing energy drinks","url":"https://github.com/ucsb-cs156-s23/team03-s23-5pm-2/pull/36"},{"author":{"id":"MDQ6VXNlcjY0ODczNzQ2","is_bot":false,"login":"cherylstanley","name":"Cheryl Stanley"},"headRefName":"Cheryl-EnergyDrinks","number":32,"title":"Cheryl energy drinks","url":"https://github.com/ucsb-cs156-s23/team03-s23-5pm-2/pull/32"}]
