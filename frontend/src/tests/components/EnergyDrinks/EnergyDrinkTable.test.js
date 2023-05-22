@@ -135,5 +135,71 @@ describe("UserTable tests", () => {
     fireEvent.click(detailButton);
     await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith('/energydrinks/detail/2')); //1
   });
+  test("Delete button works as expected for admin user", async () => {
+    const currentUser = currentUserFixtures.adminUser;
+  
+    const mockedDeleteFunction = jest.fn();
+    EnergyDrinkTable.prototype.deleteEnergyDrink = mockedDeleteFunction;
+  
+    const { getByTestId } = render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <EnergyDrinkTable energyDrinks={energydrinkFixtures.threeEnergyDrinks} currentUser={currentUser} />
+        </MemoryRouter>
+      </QueryClientProvider>
+    );
+  
+    await waitFor(() => { expect(getByTestId(`EnergyDrinkTable-cell-row-0-col-id`)).toHaveTextContent("2"); });
+  
+    const deleteButton = getByTestId(`EnergyDrinkTable-cell-row-0-col-Delete-button`);
+    expect(deleteButton).toBeInTheDocument();
+  
+    fireEvent.click(deleteButton);
+  
+    await waitFor(() => expect(mockedDeleteFunction).toHaveBeenCalledWith('2'));
+  });
+  
+  test("renders correctly for ordinary user with data", () => {
+    const currentUser = currentUserFixtures.userOnly;
+  
+    const { getByText, queryByTestId } = render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <EnergyDrinkTable energyDrinks={energydrinkFixtures.threeEnergyDrinks} currentUser={currentUser} />
+        </MemoryRouter>
+      </QueryClientProvider>
+    );
+  
+    const expectedHeaders = ["id", "Name", "Caffeine", "Description"];
+    expectedHeaders.forEach((headerText) => {
+      const header = getByText(headerText);
+      expect(header).toBeInTheDocument();
+    });
+  
+    const testId = "EnergyDrinkTable";
+    const editButton = queryByTestId(`${testId}-cell-row-0-col-Edit-button`);
+    const deleteButton = queryByTestId(`${testId}-cell-row-0-col-Delete-button`);
+  
+    expect(editButton).toBeNull();
+    expect(deleteButton).toBeNull();
+  });
+  
+  test("detail page button navigates to detail page for ordinary user", async () => {
+    const currentUser = currentUserFixtures.userOnly;
+  
+    const { getByTestId } = render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <EnergyDrinkTable energyDrinks={energydrinkFixtures.threeEnergyDrinks} currentUser={currentUser} actionVisible={true} />
+        </MemoryRouter>
+      </QueryClientProvider>
+    );
+  
+    const detailButton = getByTestId("EnergyDrinkTable-cell-row-0-col-Detail-button");
+    fireEvent.click(detailButton);
+    await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith('/energydrinks/detail/2'));
+  });
 
 });
+
+
