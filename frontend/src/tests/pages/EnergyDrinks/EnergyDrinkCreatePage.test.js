@@ -1,5 +1,5 @@
 import { render, waitFor, fireEvent } from "@testing-library/react";
-import UCSBDatesCreatePage from "main/pages/UCSBDates/UCSBDatesCreatePage";
+import EnergyDrinkCreatePage from "main/pages/EnergyDrinks/EnergyDrinkCreatePage";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 
@@ -29,7 +29,7 @@ jest.mock('react-router-dom', () => {
     };
 });
 
-describe("UCSBDatesCreatePage tests", () => {
+describe("EnergyDrinkCreatePage tests", () => {
 
     const axiosMock =new AxiosMockAdapter(axios);
 
@@ -45,7 +45,7 @@ describe("UCSBDatesCreatePage tests", () => {
         render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <UCSBDatesCreatePage />
+                    <EnergyDrinkCreatePage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
@@ -54,35 +54,35 @@ describe("UCSBDatesCreatePage tests", () => {
     test("when you fill in the form and hit submit, it makes a request to the backend", async () => {
 
         const queryClient = new QueryClient();
-        const ucsbDate = {
+        const energyDrink = {
             id: 17,
-            quarterYYYYQField: 20221,
-            name: "Groundhog Day",
-            localDateTime: "2022-02-02T00:00"
+            name: "RedBull Dupe",
+            caffeine: "8000 mg",
+            description: "Dupe of redbull, perfect for finals"
         };
 
-        axiosMock.onPost("/api/ucsbdates/post").reply( 202, ucsbDate );
+        axiosMock.onPost("/api/energydrinks/post").reply( 202, energyDrink );
 
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <UCSBDatesCreatePage />
+                    <EnergyDrinkCreatePage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
 
         await waitFor(() => {
-            expect(getByTestId("UCSBDateForm-quarterYYYYQ")).toBeInTheDocument();
+            expect(getByTestId("EnergyDrinkForm-name")).toBeInTheDocument();
         });
 
-        const quarterYYYYQField = getByTestId("UCSBDateForm-quarterYYYYQ");
-        const nameField = getByTestId("UCSBDateForm-name");
-        const localDateTimeField = getByTestId("UCSBDateForm-localDateTime");
-        const submitButton = getByTestId("UCSBDateForm-submit");
+        const nameField = getByTestId("EnergyDrinkForm-name");
+        const caffeineField = getByTestId("EnergyDrinkForm-caffeine");
+        const descriptionField = getByTestId("EnergyDrinkForm-description");
+        const submitButton = getByTestId("EnergyDrinkForm-submit");
 
-        fireEvent.change(quarterYYYYQField, { target: { value: '20221' } });
-        fireEvent.change(nameField, { target: { value: 'Groundhog Day' } });
-        fireEvent.change(localDateTimeField, { target: { value: '2022-02-02T00:00' } });
+        fireEvent.change(nameField, { target: { value: 'RandDrink' } });
+        fireEvent.change(caffeineField, { target: { value: '6000 mg' } });
+        fireEvent.change(descriptionField, { target: { value: 'RandDrink is very good for you, better than RedBull' } });
 
         expect(submitButton).toBeInTheDocument();
 
@@ -92,15 +92,14 @@ describe("UCSBDatesCreatePage tests", () => {
 
         expect(axiosMock.history.post[0].params).toEqual(
             {
-            "localDateTime": "2022-02-02T00:00",
-            "name": "Groundhog Day",
-            "quarterYYYYQ": "20221"
+            "description": "RandDrink is very good for you, better than RedBull",
+            "caffeine": "6000 mg",
+            "name": "RandDrink"
         });
 
-        expect(mockToast).toBeCalledWith("New ucsbDate Created - id: 17 name: Groundhog Day");
-        expect(mockNavigate).toBeCalledWith({ "to": "/ucsbdates/list" });
+        expect(mockToast).toBeCalledWith("New energyDrink Created - id: 17 name: RedBull Dupe");
+        expect(mockNavigate).toBeCalledWith({ "to": "/energydrinks/list" });
     });
-
 
 });
 
