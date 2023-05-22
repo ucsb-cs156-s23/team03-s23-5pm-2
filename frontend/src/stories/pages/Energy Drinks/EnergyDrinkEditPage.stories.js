@@ -4,7 +4,7 @@ import React from 'react';
 import EnergyDrinkEditPage from 'main/pages/EnergyDrinks/EnergyDrinkEditPage';
 
 export default {
-    title: 'pages/Energy Drinks/EnergyDrinkEditPage',
+    title: 'pages/EnergyDrinks/EnergyDrinkEditPage',
     component: EnergyDrinkEditPage
 };
 
