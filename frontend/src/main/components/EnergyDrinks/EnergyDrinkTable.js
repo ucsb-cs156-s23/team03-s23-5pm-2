@@ -5,7 +5,7 @@ import { cellToAxiosParamsDelete, onDeleteSuccess } from "main/utils/energydrink
 import { useNavigate } from "react-router-dom";
 import { hasRole } from "main/utils/currentUser";
 
-export default function RestaurantTable({ energyDrinks, currentUser, actionVisible = true }) {
+export default function EnergyDrinkTable({ energyDrinks, currentUser, actionVisible = true }) {
 
     const navigate = useNavigate();
 
