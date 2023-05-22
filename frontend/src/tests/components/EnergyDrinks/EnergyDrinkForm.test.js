@@ -59,7 +59,7 @@ describe("EnergyDrinkForm tests", () => {
     });
 
 
-    test("that navigate(-1) is called when Cancel is clicked", async () => {
+    test("that navigate(-1) is called swhen Cancel is clicked", async () => {
         render(
             <QueryClientProvider client={queryClient}>
                 <Router>
