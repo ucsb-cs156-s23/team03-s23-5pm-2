@@ -21,8 +21,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 
-import java.time.LocalDateTime;
-
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -86,8 +84,6 @@ public class EnergyDrinkControllerTests extends ControllerTestCase {
         public void test_that_logged_in_user_can_get_by_id_when_the_id_exists() throws Exception {
 
                 // arrange
-                LocalDateTime ldt = LocalDateTime.parse("2022-01-03T00:00:00");
-
                 EnergyDrink energydrink = EnergyDrink.builder()
                                 .name("Red Bull")
                                 .caffeine("Peach")
@@ -140,8 +136,6 @@ public class EnergyDrinkControllerTests extends ControllerTestCase {
                                 .description("150")
                                 .build();
 
-                LocalDateTime ldt2 = LocalDateTime.parse("2022-03-11T00:00:00");
-
                 EnergyDrink energydrink2 = EnergyDrink.builder()
                                 .name("Monster")
                                 .caffeine("Mango")
@@ -169,9 +163,6 @@ public class EnergyDrinkControllerTests extends ControllerTestCase {
         @Test
         public void an_admin_user_can_post_a_new_energydrink() throws Exception {
                 // arrange
-
-                LocalDateTime ldt1 = LocalDateTime.parse("2022-01-03T00:00:00");
-
                 EnergyDrink energydrink1 = EnergyDrink.builder()
                                 .name("Red Bull")
                                 .caffeine("Peach")
@@ -197,9 +188,6 @@ public class EnergyDrinkControllerTests extends ControllerTestCase {
         @Test
         public void admin_can_delete_a_description() throws Exception {
                 // arrange
-
-                LocalDateTime ldt1 = LocalDateTime.parse("2022-01-03T00:00:00");
-
                 EnergyDrink energydrink1 = EnergyDrink.builder()
                                 .name("Red Bull")
                                 .caffeine("Peach")
@@ -283,9 +271,6 @@ public class EnergyDrinkControllerTests extends ControllerTestCase {
         @Test
         public void admin_cannot_edit_energydrink_that_does_not_exist() throws Exception {
                 // arrange
-
-                LocalDateTime ldt1 = LocalDateTime.parse("2022-01-03T00:00:00");
-
                 EnergyDrink ucsbEditedDate = EnergyDrink.builder()
                                 .name("Red Bull")
                                 .caffeine("Peach")
