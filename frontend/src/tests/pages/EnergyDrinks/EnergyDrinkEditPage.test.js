@@ -77,14 +77,14 @@ describe("EnergyDrinkEditPage tests", () => {
             axiosMock.onGet("/api/energydrinks", { params: { id: 17 } }).reply(200, {
                 id: 17,
                 name: "some test name 17",
-                caffeine: "some test caffeine 17",
-                description: "some test description 17"
+                description: "some test description 17",
+                caffeine: "some test caffeine 17"
             });
             axiosMock.onPut('/api/energydrinks').reply(200, {
                 id: "17",
                 name: "some test name 19",
-                //caffeine: "some test caffeine 19",
-                description: "some test description 19"
+                description: "some test description 19",
+                caffeine: "some test caffeine 19"
             });
         });
 
@@ -113,18 +113,17 @@ describe("EnergyDrinkEditPage tests", () => {
 
             const idField = getByTestId('EnergyDrinkForm-id');
             const nameField = getByTestId('EnergyDrinkForm-name');
-            const caffeineField = getByTestId('EnergyDrinkForm-caffeine');
             const descriptionField = getByTestId('EnergyDrinkForm-description');
+            const caffeineField = getByTestId('EnergyDrinkForm-caffeine');
 
             expect(idField).toHaveValue("17");
             expect(nameField).toHaveValue("some test name 17");
-            expect(caffeineField).toHaveValue("some test caffeine 17");
             expect(descriptionField).toHaveValue("some test description 17");
+            expect(caffeineField).toHaveValue("some test caffeine 17");
+           
         });
 
         test("Changes when you click Update", async () => {
-
-
 
             const { getByTestId, findByTestId } = render(
                 <QueryClientProvider client={queryClient}>
@@ -136,19 +135,19 @@ describe("EnergyDrinkEditPage tests", () => {
 
             const idField = getByTestId('EnergyDrinkForm-id');
             const nameField = getByTestId('EnergyDrinkForm-name');
-            const caffeineField = getByTestId('EnergyDrinkForm-caffeine');
             const descriptionField = getByTestId('EnergyDrinkForm-description');
+            const caffeineField = getByTestId('EnergyDrinkForm-caffeine');
             const submitButton = getByTestId('EnergyDrinkForm-submit');
 
             expect(idField).toHaveValue("17");
             expect(nameField).toHaveValue("some test name 17");
-            expect(caffeineField).toHaveValue("some test caffeine 17");
             expect(descriptionField).toHaveValue("some test description 17");
+            expect(caffeineField).toHaveValue("some test caffeine 17");
             expect(submitButton).toBeInTheDocument();
 
             fireEvent.change(nameField, { target: { value: 'some test name 19' } })
-            fireEvent.change(caffeineField, { target: { value: "some test caffeine 19" } })
             fireEvent.change(descriptionField, { target: { value: "some test description 19" } })
+            fireEvent.change(caffeineField, { target: { value: "some test caffeine 19" } })
             fireEvent.click(submitButton);
 
             await waitFor(() => expect(mockToast).toBeCalled);
@@ -159,7 +158,7 @@ describe("EnergyDrinkEditPage tests", () => {
             expect(axiosMock.history.put[0].params).toEqual({ id: 17 });
             expect(axiosMock.history.put[0].data).toBe(JSON.stringify({
                 name: "some test name 19",
-                //caffeine: "some test caffeine 19",
+                caffeine: "some test caffeine 19",
                 description: "some test description 19"
             })); // posted object
 

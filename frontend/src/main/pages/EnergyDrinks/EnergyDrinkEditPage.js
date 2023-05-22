@@ -30,8 +30,8 @@ export default function EnergyDrinkEditPage() {
     },
     data: {
       name: energyDrink.name,
-      description: energyDrink.description,
-      caffeine: energyDrink.caffeine
+      caffeine: energyDrink.caffeine,
+      description: energyDrink.description
     }
   });
 

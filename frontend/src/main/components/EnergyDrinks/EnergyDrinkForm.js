@@ -62,22 +62,6 @@ function EnergyDrinkForm({ initialContents, submitAction, buttonLabel = "Create"
             </Form.Group>
 
             <Form.Group className="mb-3" >
-                <Form.Label htmlFor="caffeine">Caffeine</Form.Label>
-                <Form.Control
-                    data-testid={testIdPrefix + "-caffeine"}
-                    id="caffeine"
-                    type="text"
-                    isInvalid={Boolean(errors.caffeine)}
-                    {...register("caffeine", {
-                        required: "Caffeine is required."
-                    })}
-                />
-                <Form.Control.Feedback type="invalid">
-                    {errors.caffeine?.message}
-                </Form.Control.Feedback>
-            </Form.Group>
-
-            <Form.Group className="mb-3" >
                 <Form.Label htmlFor="description">Description</Form.Label>
                 <Form.Control
                     data-testid={testIdPrefix + "-description"}
@@ -90,6 +74,22 @@ function EnergyDrinkForm({ initialContents, submitAction, buttonLabel = "Create"
                 />
                 <Form.Control.Feedback type="invalid">
                     {errors.description?.message}
+                </Form.Control.Feedback>
+            </Form.Group>
+            
+            <Form.Group className="mb-3" >
+                <Form.Label htmlFor="caffeine">Caffeine</Form.Label>
+                <Form.Control
+                    data-testid={testIdPrefix + "-caffeine"}
+                    id="caffeine"
+                    type="text"
+                    isInvalid={Boolean(errors.caffeine)}
+                    {...register("caffeine", {
+                        required: "Caffeine is required."
+                    })}
+                />
+                <Form.Control.Feedback type="invalid">
+                    {errors.caffeine?.message}
                 </Form.Control.Feedback>
             </Form.Group>
 
