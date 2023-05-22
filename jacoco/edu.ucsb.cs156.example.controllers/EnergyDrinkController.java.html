@@ -24,7 +24,7 @@ import javax.validation.Valid;
 
 
 @Api(description=&quot;Energy Drink&quot;)
-@RequestMapping(&quot;/api/energydrink&quot;)
+@RequestMapping(&quot;/api/energydrinks&quot;)
 @RestController
 <span class="fc" id="L29">public class EnergyDrinkController extends ApiController{</span>
     @Autowired
@@ -43,14 +43,14 @@ import javax.validation.Valid;
     @PostMapping(&quot;/post&quot;)
     public EnergyDrink postEnergyDrink(
         @ApiParam(&quot;name&quot;) @RequestParam String name,
-        @ApiParam(&quot;flavor&quot;) @RequestParam String flavor,
-        @ApiParam(&quot;calories&quot;) @RequestParam String calories
+        @ApiParam(&quot;caffeine&quot;) @RequestParam String caffeine,
+        @ApiParam(&quot;description&quot;) @RequestParam String description
     ) throws JsonProcessingException {
 <span class="fc" id="L49">        EnergyDrink energydrink = new EnergyDrink();</span>
 <span class="fc" id="L50">        energydrink.setName(name);</span>
-<span class="fc" id="L51">        energydrink.setFlavor(flavor);</span>
-<span class="fc" id="L52">        energydrink.setCalories(calories);</span>
- 
+<span class="fc" id="L51">        energydrink.setCaffeine(caffeine);</span>
+<span class="fc" id="L52">        energydrink.setDescription(description);</span>
+
 <span class="fc" id="L54">        EnergyDrink savedEnergyDrink = energydrinkRepository.save(energydrink);</span>
 <span class="fc" id="L55">        return savedEnergyDrink;</span>
     }
@@ -75,8 +75,8 @@ import javax.validation.Valid;
 
 <span class="fc" id="L76">        EnergyDrink energydrink = energydrinkRepository.findById(id).orElseThrow(()-&gt; new EntityNotFoundException(EnergyDrink.class, id));</span>
 <span class="fc" id="L77">        energydrink.setName(incoming.getName());</span>
-<span class="fc" id="L78">        energydrink.setFlavor(incoming.getFlavor());</span>
-<span class="fc" id="L79">        energydrink.setCalories(incoming.getCalories());</span>
+<span class="fc" id="L78">        energydrink.setCaffeine(incoming.getCaffeine());</span>
+<span class="fc" id="L79">        energydrink.setDescription(incoming.getDescription());</span>
 
 <span class="fc" id="L81">        energydrinkRepository.save(energydrink);</span>
 <span class="fc" id="L82">        return energydrink;</span>
@@ -90,7 +90,7 @@ import javax.validation.Valid;
     ) {
 <span class="fc" id="L91">        EnergyDrink energydrink = energydrinkRepository.findById(id)</span>
 <span class="fc" id="L92">                .orElseThrow(()-&gt; new EntityNotFoundException(EnergyDrink.class, id));</span>
-        
+
 <span class="fc" id="L94">        energydrinkRepository.delete(energydrink);</span>
 <span class="fc" id="L95">        return genericMessage(&quot;EnergyDrink with id %s deleted&quot;.formatted(id));</span>
     }
