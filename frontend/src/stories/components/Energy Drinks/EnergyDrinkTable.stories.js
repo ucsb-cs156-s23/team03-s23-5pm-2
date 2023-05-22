@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { EnergyDrinkTable } from 'main/components/EnergyDrinks/EnergyDrinkTable';
+import EnergyDrinkTable from 'main/components/EnergyDrinks/EnergyDrinkTable';
 import { energydrinkFixtures } from 'fixtures/energydrinkFixtures';
 
 export default {
-    title: 'components/Energy Drinks/EnergyDrinkTable',
+    title: 'components/EnergyDrinks/EnergyDrinkTable',
     component: EnergyDrinkTable
 };
 
@@ -17,13 +17,13 @@ const Template = (args) => {
 export const Empty = Template.bind({});
 
 Empty.args = {
-    dates: []
+    energyDrinks: []
 };
 
 export const ThreeDates = Template.bind({});
 
 ThreeDates.args = {
-    dates: energydrinkFixtures.threeEnergyDrinks
+    energyDrinks: energydrinkFixtures.threeEnergyDrinks
 };
 
 
