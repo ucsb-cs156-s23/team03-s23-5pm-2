@@ -1,11 +1,11 @@
 
 import React from 'react';
 
-import { EnergyDrinkCreatePage } from 'main/pages/EnergyDrinks/EnergyDrinkCreatePage';
+import EnergyDrinkCreatePage  from 'main/pages/EnergyDrinks/EnergyDrinkCreatePage';
 
 
 export default {
-    title: 'pages/Energy Drinks/EnergyDrinkCreatePage',
+    title: 'pages/EnergyDrinks/EnergyDrinkCreatePage',
     component: EnergyDrinkCreatePage
 };
 

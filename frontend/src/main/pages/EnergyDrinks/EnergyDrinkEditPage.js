@@ -10,7 +10,7 @@ export default function EnergyDrinkEditPage() {
 
   const { data: energyDrink, error, status } =
     useBackend(
-      // Stryker disable next-line all : don't test internal caching of React Query
+      // Stryker disable next-line all : don'tgit  test internal caching of React Query
       [`/api/energydrinks?id=${id}`],
       {  // Stryker disable next-line all : GET is the default, so changing this to "" doesn't introduce a bug
         method: "GET",
