@@ -42,7 +42,7 @@ public class EnergyDrinkControllerTests extends ControllerTestCase {
         @MockBean
         UserRepository userRepository;
 
-    
+
 
         @Test
         public void logged_out_users_cannot_get_all() throws Exception {
@@ -63,7 +63,7 @@ public class EnergyDrinkControllerTests extends ControllerTestCase {
                                 .andExpect(status().is(403)); // logged out users can't get by id
         }
 
-      
+
         // (Perhaps should also have these for put and delete)
 
         @Test

@@ -31,7 +31,7 @@ export default function EnergyDrinkTable({ energyDrinks, currentUser, actionVisi
 
     const columns = [
         {
-            Header: 'id',
+            Header: 'ID',
             accessor: 'id', // accessor is the "key" in the data
         },
 

@@ -24,7 +24,7 @@ import javax.validation.Valid;
 
 
 @Api(description="Energy Drink")
-@RequestMapping("/api/energydrinks")
+@RequestMapping("/api/energydrink")
 @RestController
 public class EnergyDrinkController extends ApiController{
     @Autowired
@@ -50,7 +50,7 @@ public class EnergyDrinkController extends ApiController{
         energydrink.setName(name);
         energydrink.setCaffeine(caffeine);
         energydrink.setDescription(description);
- 
+
         EnergyDrink savedEnergyDrink = energydrinkRepository.save(energydrink);
         return savedEnergyDrink;
     }
@@ -90,7 +90,7 @@ public class EnergyDrinkController extends ApiController{
     ) {
         EnergyDrink energydrink = energydrinkRepository.findById(id)
                 .orElseThrow(()-> new EntityNotFoundException(EnergyDrink.class, id));
-        
+
         energydrinkRepository.delete(energydrink);
         return genericMessage("EnergyDrink with id %s deleted".formatted(id));
     }

@@ -68,7 +68,7 @@ describe("UserTable tests", () => {
 
     );
 
-    const expectedHeaders = ["id", "Name", "Caffeine", "Description"];
+    const expectedHeaders = ["ID", "Name", "Caffeine", "Description"];
     const expectedFields = ["id", "name", "caffeine", "description"];
     const testId = "EnergyDrinkTable";
 
@@ -82,9 +82,9 @@ describe("UserTable tests", () => {
       expect(header).toBeInTheDocument();
     });
 
-    expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("2");//1
-    expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("3"); //2
-    expect(getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent("4"); //3
+    expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("2"); 
+    expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("3");
+    expect(getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent("4");
 
     const editButton = getByTestId(`${testId}-cell-row-0-col-Edit-button`);
     expect(editButton).toBeInTheDocument();
