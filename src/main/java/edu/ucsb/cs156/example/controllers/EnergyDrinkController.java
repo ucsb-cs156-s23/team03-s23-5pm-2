@@ -24,7 +24,7 @@ import javax.validation.Valid;
 
 
 @Api(description="Energy Drink")
-@RequestMapping("/api/energydrink")
+@RequestMapping("/api/energydrinks")
 @RestController
 public class EnergyDrinkController extends ApiController{
     @Autowired
