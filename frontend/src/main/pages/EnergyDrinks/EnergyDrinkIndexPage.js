@@ -20,7 +20,7 @@ export default function EnergyDrinkIndexPage() {
   return (
     <BasicLayout>
       <div className="pt-2">
-        <h1>Restaurants</h1>
+        <h1>Energy Drinks</h1>
         <EnergyDrinkTable energyDrinks={energyDrinks} currentUser={currentUser} />
       </div>
     </BasicLayout>

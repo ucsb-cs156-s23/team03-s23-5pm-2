@@ -4,7 +4,7 @@ import { EnergyDrinkForm } from 'main/components/EnergyDrinks/EnergyDrinkForm';
 import { energydrinkFixtures } from 'fixtures/energydrinkFixtures';
 
 export default {
-    title: 'components/Energy Drinks/EnergyDrinkForm',
+    title: 'components/EnergyDrinks/EnergyDrinkForm',
     component: EnergyDrinkForm
 };
 

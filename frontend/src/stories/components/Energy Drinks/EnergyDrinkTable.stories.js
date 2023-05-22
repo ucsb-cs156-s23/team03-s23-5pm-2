@@ -17,13 +17,13 @@ const Template = (args) => {
 export const Empty = Template.bind({});
 
 Empty.args = {
-    dates: []
+    energyDrinks: []
 };
 
-export const ThreeDates = Template.bind({});
+export const ThreeEnergyDrinks = Template.bind({});
 
-ThreeDates.args = {
-    dates: energydrinkFixtures.threeEnergyDrinks
+ThreeEnergyDrinks.args = {
+    energyDrinks: energydrinkFixtures.threeEnergyDrinks
 };
 
 

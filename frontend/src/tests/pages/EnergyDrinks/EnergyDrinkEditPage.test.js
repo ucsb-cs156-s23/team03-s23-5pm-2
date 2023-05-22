@@ -83,7 +83,7 @@ describe("EnergyDrinkEditPage tests", () => {
             axiosMock.onPut('/api/energydrinks').reply(200, {
                 id: "17",
                 name: "some test name 19",
-                //caffeine: "some test caffeine 19",
+                caffeine: "some test caffeine 19",
                 description: "some test description 19"
             });
         });
@@ -159,8 +159,8 @@ describe("EnergyDrinkEditPage tests", () => {
             expect(axiosMock.history.put[0].params).toEqual({ id: 17 });
             expect(axiosMock.history.put[0].data).toBe(JSON.stringify({
                 name: "some test name 19",
-                //caffeine: "some test caffeine 19",
-                description: "some test description 19"
+                description: "some test description 19",
+                caffeine: "some test caffeine 19"
             })); // posted object
 
         });
