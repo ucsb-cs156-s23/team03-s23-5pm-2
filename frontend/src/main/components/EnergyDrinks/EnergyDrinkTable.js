@@ -29,39 +29,41 @@ export default function EnergyDrinkTable({ energyDrinks, currentUser, actionVisi
     // Stryker disable next-line all : TODO try to make a good test for this
     const deleteCallback = async (cell) => { deleteMutation.mutate(cell); }
 
-    const columns = [
-        {
-            Header: 'id',
-            accessor: 'id', // accessor is the "key" in the data
-        },
+    const columns = React.useMemo(() => {
+        const cols = [
+            {
+                Header: 'id',
+                accessor: 'id', // accessor is the "key" in the data
+            },
 
-        {
-            Header: 'Name',
-            accessor: 'name',
-        },
-        {
-            Header: 'Caffeine',
-            accessor: 'caffeine',
-        },
-        {
-            Header: 'Description',
-            accessor: 'description',
+            {
+                Header: 'Name',
+                accessor: 'name',
+            },
+            {
+                Header: 'Caffeine',
+                accessor: 'caffeine',
+            },
+            {
+                Header: 'Description',
+                accessor: 'description',
+            }
+        ];
+
+        if (hasRole(currentUser, "ROLE_ADMIN") && actionVisible) {
+            cols.push(ButtonColumn("Detail", "primary", detailCallback, "EnergyDrinkTable"));
+            cols.push(ButtonColumn("Edit", "primary", editCallback, "EnergyDrinkTable"));
+            cols.push(ButtonColumn("Delete", "danger", deleteCallback, "EnergyDrinkTable"));
         }
-    ];
 
-    if (hasRole(currentUser, "ROLE_ADMIN") && actionVisible) {
-        columns.push(ButtonColumn("Detail", "primary", detailCallback, "EnergyDrinkTable"));
-        columns.push(ButtonColumn("Edit", "primary", editCallback, "EnergyDrinkTable"));
-        columns.push(ButtonColumn("Delete", "danger", deleteCallback, "EnergyDrinkTable"));
-    }
+        return cols;
+    }, [currentUser, actionVisible]);
 
-    // Stryker disable next-line ArrayDeclaration : [columns] is a performance optimization
-    const memoizedColumns = React.useMemo(() => columns, [columns]);
     const memoizedEnergyDrinks = React.useMemo(() => energyDrinks, [energyDrinks]);
 
     return <OurTable
         data={memoizedEnergyDrinks}
-        columns={memoizedColumns}
+        columns={columns}
         testid={"EnergyDrinkTable"}
     />;
 };

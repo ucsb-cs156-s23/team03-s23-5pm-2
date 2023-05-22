@@ -135,5 +135,82 @@ describe("UserTable tests", () => {
     fireEvent.click(detailButton);
     await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith('/energydrinks/detail/2')); //1
   });
+  // Test that the table renders with the expected column headers and content for ordinary user
+test("Has the expected column headers and content for Ordinary User", () => {
 
+  const currentUser = currentUserFixtures.userOnly;
+
+  const { getByText, getByTestId } = render(
+    <QueryClientProvider client={queryClient}>
+      <MemoryRouter>
+        <EnergyDrinkTable energyDrinks={energydrinkFixtures.threeEnergyDrinks} currentUser={currentUser} />
+      </MemoryRouter>
+    </QueryClientProvider>
+  );
+
+  const expectedHeaders = ["id", "Name", "Caffeine", "Description"];
+  const expectedFields = ["id", "name", "caffeine", "description"];
+  const testId = "EnergyDrinkTable";
+
+  expectedHeaders.forEach((headerText) => {
+    const header = getByText(headerText);
+    expect(header).toBeInTheDocument();
+  });
+
+  expectedFields.forEach((field) => {
+    const header = getByTestId(`${testId}-cell-row-0-col-${field}`);
+    expect(header).toBeInTheDocument();
+  });
+
+  expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("2");
+  expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("3");
+  expect(getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent("4");
 });
+
+// Test Delete button calls delete callback for ordinary user
+test("Delete button calls delete callback for ordinary user", async () => {
+
+  const currentUser = currentUserFixtures.userOnly;
+
+  const { getByTestId } = render(
+    <QueryClientProvider client={queryClient}>
+      <MemoryRouter>
+        <EnergyDrinkTable energyDrinks={energydrinkFixtures.threeEnergyDrinks} currentUser={currentUser} />
+      </MemoryRouter>
+    </QueryClientProvider>
+  );
+
+  await waitFor(() => { expect(getByTestId(`EnergyDrinkTable-cell-row-0-col-id`)).toHaveTextContent("2"); });
+
+  const deleteButton = getByTestId(`EnergyDrinkTable-cell-row-0-col-Delete-button`);
+  expect(deleteButton).toBeInTheDocument();
+  
+  fireEvent.click(deleteButton);
+
+  await waitFor(() => expect(mockedMutate).toHaveBeenCalledTimes(1));
+});
+
+// Test Delete button calls delete callback for admin user
+test("Delete button calls delete callback for admin user", async () => {
+
+  const currentUser = currentUserFixtures.adminUser;
+
+  const { getByTestId } = render(
+    <QueryClientProvider client={queryClient}>
+      <MemoryRouter>
+        <EnergyDrinkTable energyDrinks={energydrinkFixtures.threeEnergyDrinks} currentUser={currentUser} />
+      </MemoryRouter>
+    </QueryClientProvider>
+  );
+
+  await waitFor(() => { expect(getByTestId(`EnergyDrinkTable-cell-row-0-col-id`)).toHaveTextContent("2"); });
+
+  const deleteButton = getByTestId(`EnergyDrinkTable-cell-row-0-col-Delete-button`);
+  expect(deleteButton).toBeInTheDocument();
+  
+  fireEvent.click(deleteButton);
+
+  await waitFor(() => expect(mockedMutate).toHaveBeenCalledTimes(1));
+  });
+});
+
